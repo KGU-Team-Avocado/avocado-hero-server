@@ -3,6 +3,8 @@ const app = express();
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
+const testsRouter = require('./routes/Tests')
+
 //application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({limit: "50mb", extended: true}));
 
@@ -32,3 +34,5 @@ app.get('/', (req, res) => {
 app.listen(8080,function(){
     console.log('listening on 8080');
 });
+
+app.use('/testsRouter', testsRouter);
