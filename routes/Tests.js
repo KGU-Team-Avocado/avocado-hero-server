@@ -81,7 +81,7 @@ router.get('/delete/:test_id', function(req, res, next) {
 });
 
 /* POST */
-router.post('/save', function(req, res) {
+router.post('/postSave', function(req, res) {
     console.log(req.body); // 프론트에서 스키마 형식에 맞는 데이터 넘겨줌
     // 데이터 저장
     var newTest = new Test(req.body.data);
@@ -96,7 +96,7 @@ router.post('/save', function(req, res) {
     });
 });
 
-router.post('/findOne/', function(req, res) {
+router.post('/postFindOne/', function(req, res) {
     // 특정 아이디값 가져오기
     const test_id = req.body.data.test_id; // 프론트에서 post을 이용해 파라미터로 id를 넘겨줌
     User.findOne({test_id: test_id}, function(error,tests){
@@ -108,7 +108,7 @@ router.post('/findOne/', function(req, res) {
     });
 });
 
-router.post('/modify', function (req, res, next) {
+router.post('/postModify', function (req, res, next) {
     // 특정 아이디값 가져오기
     const test_id = req.body.data.test_id;
     const newTest = req.body.data.test;
@@ -135,7 +135,7 @@ router.post('/modify', function (req, res, next) {
         });
 });
 
-router.post('/delete', function(req, res, next) {
+router.post('/postDelete', function(req, res, next) {
    // 삭제
    Test.remove({test_id: req.body.data.test_id}, function(error,output){
        console.log('--- Delete ---');
