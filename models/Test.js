@@ -16,7 +16,10 @@ const testSchema = mongoose.Schema({
     test_date: {
         type: Date
     },
-    test_bool: Boolean,
+    test_bool: {
+        type: Boolean,
+        default: false
+    },
     test_list: [
         String
     ],

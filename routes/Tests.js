@@ -108,4 +108,43 @@ router.post('/findOne/', function(req, res) {
     });
 });
 
+router.post('/modify', function (req, res, next) {
+    // 특정 아이디값 가져오기
+    const test_id = req.body.data.test_id;
+    const newTest = req.body.data.test;
+    // 특정아이디 수정하기
+    Test.findOneAndUpdate(
+        { test_id: test_id },
+        {
+            $set: {
+                test_num: newTest.test_num,
+                test_date: newTest.test_date,
+                test_bool: newTest.test_bool,
+                test_list: newTest.test_list,
+                test_json: newTest.test_json,
+                test_json_list: newTest.test_json_list,
+            }
+        }).exec((error, output) => {
+            if (error) {
+                console.log(error);
+                res.json({ status: 'error', error })
+            } else {
+                console.log('Saved!')
+                res.json({ status: 'success', output: output })
+            }
+        });
+});
+
+router.post('/delete', function(req, res, next) {
+   // 삭제
+   Test.remove({test_id: req.body.data.test_id}, function(error,output){
+       console.log('--- Delete ---');
+       if(error){
+           console.log(error);
+       }
+       res.json({status: 'success', output: output})
+       console.log('--- deleted ---');
+   });
+});
+
 module.exports = router;
