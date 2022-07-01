@@ -21,7 +21,7 @@ console.log();
 mongoose.connect(`mongodb+srv://soyoung:qnstksalcqudfufcjfl@cluster0.c7eeq.mongodb.net/avocado_hero?authSource=admin&replicaSet=atlas-rkqtpg-shard-0&readPreference=primary&appname=MongoDB%20Compass&ssl=true`, {})
 .then(
   () => {
-    console.log('MongoDB Connected!! ① http://localhost:8080 ② http://'+ip.address()+':8080');
+    console.log('MongoDB Connected!! ① http://localhost:5000 ② http://'+ip.address()+':5000');
   }
 ).catch(
   err => console.log(err)
@@ -31,8 +31,8 @@ app.get('/', (req, res) => {
     res.send('서버가 동작하고 있습니다.')
 });
 
-app.listen(8080,function(){
-    console.log('listening on 8080');
+app.listen(5000,function(){
+    console.log('listening on 5000');
 });
 
 app.use('/testsRouter', testsRouter);
