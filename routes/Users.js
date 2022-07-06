@@ -3,13 +3,13 @@ const router = express.Router();
 const bodyParser = require("body-parser");
 const { User } = require("../models/User");
 
-//application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: true }));
+// //application/x-www-form-urlencoded
+// app.use(bodyParser.urlencoded({ extended: true }));
 
-//application/json
-app.use(bodyParser.json());
+// //application/json
+// app.use(bodyParser.json());
 
-app.post("/register", (req, res) => {
+router.post("/register", (req, res) => {
   // post 요청을 처리해 응답을 주는 함수가 들어올 위치.
 
   // 회원가입할 때 필요한 정보들을 client에서 가져오면
@@ -24,3 +24,5 @@ app.post("/register", (req, res) => {
     });
   });
 });
+
+module.exports = router;
