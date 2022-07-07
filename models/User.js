@@ -6,12 +6,9 @@ const userSchema = mongoose.Schema({
   user_id: {
     type: String,
     maxlength: 30,
+    unique: 1,
   },
   user_password: {
-    type: String,
-    maxlength: 30,
-  },
-  user_confirmPassword: {
     type: String,
     maxlength: 30,
   },
