@@ -54,4 +54,28 @@ router.post("/login", (req, res) => {
   );
 });
 
+router.post("/findUser", (req, res) => {
+  const account = req.body;
+  console.log('ac'+account)
+  User.findOne({ user_id: account.user_id }, function (error, user) {
+      if (error) {
+        console.log(error);
+        return res.json({ status: "error", user: user });
+      } else {
+        console.log(user);
+        if (user === null) {
+          return res.json({ status: "fail", user: user });
+        } else {
+          const securedUser = {
+            user_id: user.user_id,
+            user_name: user.user_name,
+            user_email: user.user_email,
+          };
+          return res.json({ status: "success", user: securedUser });
+        }
+      }
+    }
+  );
+});
+
 module.exports = router;
