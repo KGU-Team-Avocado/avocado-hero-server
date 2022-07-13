@@ -19,8 +19,8 @@ const userSchema = mongoose.Schema({
   user_email: {
     type: String,
     maxlength: 30,
-    unique: 1,
-    trim: true,
+    //unique: 1,
+    trim: true, //공백제거
   },
 });
 
