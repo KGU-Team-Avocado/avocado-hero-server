@@ -22,6 +22,32 @@ const userSchema = mongoose.Schema({
     //unique: 1,
     trim: true, //공백제거
   },
+  user_phoneNum: {
+    type: String,
+    maxlength: 30,
+  },
+  user_birth: {
+    type: Date,
+  }, 
+  user_nickname: {
+    type: String, 
+    maxlength: 30,
+  },
+  user_img: { // 사진
+    type: String,
+  },
+  // -- 기본 정보 --
+
+  user_belong: [String],
+  user_field: [String],
+  user_link: [String],
+  // -- 스펙 관련 -- 
+
+  user_intro: { // 소개글
+    type: String,
+  },
+  user_keyword: [String], 
+  user_personality: [String], // 성향
 });
 
 userSchema.pre("save", function (next) {
