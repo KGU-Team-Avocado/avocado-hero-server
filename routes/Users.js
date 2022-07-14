@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const bodyParser = require("body-parser");
 const { User } = require("../models/User");
+const { LoginLog } = require("../models/LoginLog");
 
 // //application/x-www-form-urlencoded
 // app.use(bodyParser.urlencoded({ extended: true }));
@@ -52,6 +53,12 @@ router.post("/login", (req, res) => {
         if (user === null) {
           return res.json({ status: "fail", user: user });
         } else {
+          LoginLog.find().then((tests) => {
+            new LoginLog({ secure_num:tests.length, user_id: user.user_id, time: new Date() }).save();
+          }).catch((err) => {
+            console.log('hello there');
+            console.log(err);
+          });
           const securedUser = {
             user_id: user.user_id,
             user_name: user.user_name,
