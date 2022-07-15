@@ -1,8 +1,22 @@
-const express = require('express')
+const express = require('express');
+const { LoginLog } = require('../models/LoginLog');
 const router = express.Router();
 const { Test } = require("../models/Test");
 
 // http://localhost:5000 에서 확인하기 쉽도록 get을 위주로 구현하였지만 실제 프론트에서 사용할 때 데이터를 넘기는 것은 post 방식이 더 쉽고 보안적으로도 좋다고 생각함.
+
+/* GET. */
+router.get('/findLogs', function (req, res, next) {
+    // 전체 데이터 가져오기
+    LoginLog.find().then((tests) => {
+        // console.log(tests);
+        res.json(tests)
+    }).catch((err) => {
+        console.log(err);
+        next(err)
+    });
+});
+
 
 /* GET. */
 router.get('/find', function (req, res, next) {
