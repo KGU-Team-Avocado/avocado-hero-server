@@ -40,5 +40,10 @@ app.listen(5000, function () {
   console.log("listening on 5000");
 });
 
+/* GET. */
+app.get('/ip', function (req, res, next) {
+    res.json(ip.address())
+});
+
 app.use("/testsRouter", testsRouter);
 app.use("/usersRouter", usersRouter);
