@@ -95,18 +95,24 @@ router.post("/findUser", (req, res) => {
 });
 
 router.post("/profileUpdate", (req, res) => {
-  // post 요청을 처리해 응답을 주는 함수가 들어올 위치.
+  const account = req.body;
+  
   console.log(req.body);
 
-  // 프로필 업뎃할 때 필요한 정보들을 clinet에서 가져오면 그것들을 데이터베이스에 넣어준다.
-  // 프로필 업뎃이 성공했다는 응답을 준다.
-  const user = new User(req.body);
-  user.save((err, userInfo) => {
-    if (err) return res.json({ success: false, err });
-    return res.status(200).json({
-      success: true,
-    });
-  });
+  User.findByIdAndUpdate(account.user_id, req.body, {
+     new: true, 
+    },
+    function (error, user) {
+      if (error) {
+        console.log(error);
+        return res.json({ status: "error", user: user });
+      } else {
+        console.log(user);
+      }
+    }
+    ).exec();
+    
 });
+
 
 module.exports = router;
