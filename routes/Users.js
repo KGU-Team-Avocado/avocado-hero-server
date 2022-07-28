@@ -96,21 +96,18 @@ router.post("/findUser", (req, res) => {
 
 router.post("/profileUpdate", (req, res) => {
   const account = req.body;
-  
+
   console.log(req.body);
 
-  User.findByIdAndUpdate(account.user_id, req.body, {
-     new: true, 
-    },
-    function (error, user) {
-      if (error) {
-        console.log(error);
-        return res.json({ status: "error", user: user });
-      } else {
-        console.log(user);
-      }
+ User.findOneAndUpdate({user_id: {$eq:account.user_id} },
+    req.body, null, function (err, docs) {
+    if (err){
+        console.log(err)
     }
-    ).exec();
+    else{
+        console.log("Original Doc : ",docs);
+    }
+});
     
 });
 
