@@ -6,6 +6,8 @@ const mongoose = require("mongoose");
 const testsRouter = require("./routes/Tests");
 const usersRouter = require("./routes/Users");
 const groupsRouter = require("./routes/Groups");
+const companiesRouter = require("./routes/Companies");
+
 
 //application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
@@ -49,3 +51,4 @@ app.get('/ip', function (req, res, next) {
 app.use("/testsRouter", testsRouter);
 app.use("/usersRouter", usersRouter);
 app.use("/groupsRouter", groupsRouter);
+app.use("/companiesRouter", companiesRouter);
