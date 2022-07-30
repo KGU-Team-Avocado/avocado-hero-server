@@ -22,6 +22,10 @@ const groupSchema = mongoose.Schema({
     tech_stack: [
         String
     ],
+    manager:{
+        type:String,
+        required:true
+    }
 })
 
 const Group = mongoose.model('Group', groupSchema)
