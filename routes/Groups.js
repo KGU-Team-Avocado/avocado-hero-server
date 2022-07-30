@@ -13,4 +13,14 @@ router.post("/create", (req, res) => {
     });
   });
 });
+
+router.get("/getGroup", (req, res, next) => {
+  Group.find().then((tests) => {
+    // console.log(tests);
+    res.json(tests)
+}).catch((err) => {
+    console.log(err);
+    next(err)
+});
+});
 module.exports = router;
