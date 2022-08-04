@@ -29,8 +29,8 @@ const userSchema = mongoose.Schema({
     type: String,
     maxlength: 30,
   },
-  user_birth: {
-    type: Date,
+  user_age: {
+    type: String,
   },
   user_nickname: {
     type: String,

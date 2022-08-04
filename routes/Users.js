@@ -84,9 +84,8 @@ router.post("/findUser", (req, res) => {
         return res.json({ status: "fail", user: user });
       } else {
         const securedUser = {
-          user_id: user.user_id,
-          user_name: user.user_name,
-          user_email: user.user_email,
+          ...user,
+          ['user_password']:""
         };
         return res.json({ status: "success", user: securedUser });
       }
