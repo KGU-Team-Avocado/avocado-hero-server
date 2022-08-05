@@ -13,7 +13,10 @@ const applyLogSchema = mongoose.Schema({
         type: String,
         required: true  // not null
     },
-    // 유저아이디, 신청한그룹아이디, 결과
+    message: {
+        type: String,
+    },
+    // 유저아이디, 신청한그룹아이디, 결과, 자기소개
 })
 
 const ApplyLog = mongoose.model('ApplyLog', applyLogSchema)
