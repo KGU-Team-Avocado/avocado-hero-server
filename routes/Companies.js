@@ -117,28 +117,44 @@ const { LoginLog } = require("../models/LoginLog");
 
 router.post("/jobPost", (req,res) => {
   
+  // const companies = {
+  //   company_id: company.company_id,
+  //   company_company_name: company.company_company_name,
+  //   company_title: company.company_title,
+  //   company_field: company.company_field,
+  //   company_recruit_number: company.company_recruit_number,
+  //   company_tag: company.company_tag,
+  //   company_period: company.company_period,
+  //   company_site: company.company_site,
+  // };
+
   const company = new Company(req.body);
+  const company_id = company.company_id;
   console.log(req.body);
 
-  const companys = {
-    company_id: company.company_id,
-    company_company_name: company.company_company_name,
-    company_title: company.company_title,
-    company_field: company.company_field,
-    company_recruit_number: company.company_recruit_number,
-    company_tag: company.company_tag,
-    company_period: company.company_period,
-    company_site: company.company_site,
-  };
+  Company.findOne({ company_id: company_id }, function (error, result) {
+    if (result == null) {
+      console.log("중복 기업아이디 없음");
 
-  company.save();
+      company.save((err, userInfo) => {
+        if (err) return res.json({ success: false, err });
+        return res.status(200).json({
+          success: true,
+        });
+      });
+    } else {
+      //res.send("중복된 기업아이디입니다.");
+      return res.json({ compIdCheck: false });
+    }
+  });
 
-  return res.json({company:companys});
+  // return res.json({company:companies});
 
 });
 
 router.get('/getPost', function (req, res, next) {
   // 전체 데이터 가져오기
+  
   Company.find().then((companies) => {
       // console.log(tests);
       res.json(companies)
