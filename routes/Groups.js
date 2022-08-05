@@ -76,7 +76,7 @@ router.post("/getAppliedGroup", (req, res, next) => {
 
 router.post("/getMyGroup", (req, res, next) => {
   console.log(req.body);
-  Group.find({ user_id : req.body.user_id }).then((tests) => {
+  Group.find({ members : req.body.user_id }).then((tests) => {
     res.json(tests)
   }).catch((err) => {
     console.log(err);

@@ -7,38 +7,47 @@ const userSchema = mongoose.Schema({
     type: String,
     maxlength: 30,
     unique: 1,
+    default: 'undefined',
   },
   user_password: {
     type: String,
     maxlength: 30,
+    default: 'undefined',
   },
   user_name: {
     type: String,
     maxlength: 30,
+    default: 'undefined',
   },
   user_email: {
     type: String,
     maxlength: 30,
     //unique: 1,
     trim: true, //공백제거
+    default: 'undefined',
   },
   user_type: {
     type: String,
+    default: 'undefined',
   },
   user_phoneNum: {
     type: String,
     maxlength: 30,
+    default: 'undefined',
   },
   user_age: {
     type: String,
+    default: 'undefined',
   },
   user_nickname: {
     type: String,
     maxlength: 30,
+    default: 'undefined',
   },
   user_img: {
     // 사진
     type: String,
+    default: 'undefined',
   },
   // -- 기본 정보 --
 
@@ -50,9 +59,11 @@ const userSchema = mongoose.Schema({
   user_intro: {
     // 소개글
     type: String,
+    default: 'undefined',
   },
   user_keyword: [String],
-  user_personality: [String], // 성향
+  user_personality: [String], // 성향,
+  user_groups: [String],
 });
 
 userSchema.pre("save", function (next) {

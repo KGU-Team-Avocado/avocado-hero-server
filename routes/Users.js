@@ -49,14 +49,15 @@ router.post("/login", (req, res) => {
         console.log(error);
         return res.json({ status: "error", user: user });
       } else {
-        console.log(user);
+        console.log(user)
+        console.log('---')
         if (user === null) {
           return res.json({ status: "fail", user: user });
         } else {
+          console.log(new User())
           LoginLog.find().then((tests) => {
             new LoginLog({ secure_num:tests.length, user_id: user.user_id, time: new Date() }).save();
           }).catch((err) => {
-            console.log('hello there');
             console.log(err);
           });
           const securedUser = {
