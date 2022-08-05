@@ -25,7 +25,13 @@ const groupSchema = mongoose.Schema({
     manager:{
         type:String,
         required:true
-    }
+    },
+    members: [
+        String
+    ],
+    applied: [
+        String
+    ],
 })
 
 const Group = mongoose.model('Group', groupSchema)

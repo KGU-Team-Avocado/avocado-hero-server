@@ -37,11 +37,19 @@ router.post("/apply", (req, res) => {
       console.log("중복아이디 없음");
       const group = new ApplyLog(req.body);
       group.save((err) => {
-        if (err) return res.json({ success: false, err });
-        return res.status(200).json({
-          success: true,
-        });
+        if (err){
+          return res.json({ success: false, err }); 
+        } 
+        else{
+          const filter = { _id : req.body.group_id };
+          const update = { $push: { applied: req.body.user_id } };
+          Group.updateOne(filter, update);
+          return res.status(200).json({
+            success: true,
+          });  
+        }
       });
+
     } else {
       return res.json({ success: false });
     }
