@@ -43,14 +43,21 @@ router.post("/apply", (req, res) => {
         else{
           const filter = { _id : req.body.group_id };
           const update = { $push: { applied: req.body.user_id } };
-          Group.updateOne(filter, update);
-          return res.status(200).json({
-            success: true,
-          });  
+          Group.findOneAndUpdate(filter, update, function (error, success) {
+            if (error) {
+                console.log(error);
+            } else {
+                console.log(success);
+                return res.status(200).json({
+                  success: true,
+                });        
+            }
+        });
         }
       });
 
     } else {
+      console.log('어어')
       return res.json({ success: false });
     }
   });
