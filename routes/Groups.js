@@ -26,7 +26,7 @@ router.get("/getGroup", (req, res, next) => {
 });
 
 router.post("/apply", (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
   ApplyLog.findOne( {
     $and: [
        { user_id: req.body.user_id },
@@ -65,7 +65,7 @@ router.post("/apply", (req, res) => {
 });
 
 router.post("/getAppliedGroup", (req, res, next) => {
-  console.log(req.body);
+  // console.log(req.body);
   ApplyLog.find({ user_id : req.body.user_id }).then((tests) => {
     res.json(tests)
   }).catch((err) => {
@@ -73,5 +73,16 @@ router.post("/getAppliedGroup", (req, res, next) => {
     next(err)
   });
 });
+
+router.post("/getMyGroup", (req, res, next) => {
+  console.log(req.body);
+  Group.find({ user_id : req.body.user_id }).then((tests) => {
+    res.json(tests)
+  }).catch((err) => {
+    console.log(err);
+    next(err)
+  });
+});
+
 
 module.exports = router;
