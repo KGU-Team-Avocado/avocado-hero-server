@@ -64,4 +64,14 @@ router.post("/apply", (req, res) => {
 
 });
 
+router.post("/getAppliedGroup", (req, res, next) => {
+  console.log(req.body);
+  ApplyLog.find({ user_id : req.body.user_id }).then((tests) => {
+    res.json(tests)
+  }).catch((err) => {
+    console.log(err);
+    next(err)
+  });
+});
+
 module.exports = router;
