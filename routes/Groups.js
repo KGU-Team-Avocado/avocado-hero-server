@@ -84,5 +84,14 @@ router.post("/getMyGroup", (req, res, next) => {
   });
 });
 
+router.post("/getApplicants", (req, res, next) => {
+  // console.log(req.body);
+  ApplyLog.find({ user_id : req.body.group_id }).then((tests) => {
+    res.json(tests)
+  }).catch((err) => {
+    console.log(err);
+    next(err)
+  });
+});
 
 module.exports = router;
