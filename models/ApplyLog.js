@@ -1,11 +1,19 @@
 const mongoose = require('mongoose');
 
 const applyLogSchema = mongoose.Schema({
+    group_id: {
+        type: String,
+        required: true  // not null
+    },
     user_id: {
         type: String,
         required: true  // not null
     },
-    group_id: {
+    user_name: {
+        type: String,
+        required: true  // not null
+    },
+    user_email: {
         type: String,
         required: true  // not null
     },

@@ -41,18 +41,21 @@ router.post("/apply", (req, res) => {
           return res.json({ success: false, err }); 
         } 
         else{
-          const filter = { _id : req.body.group_id };
-          const update = { $push: { applied: req.body.user_id } };
-          Group.findOneAndUpdate(filter, update, function (error, success) {
-            if (error) {
-                console.log(error);
-            } else {
-                console.log(success);
-                return res.status(200).json({
-                  success: true,
-                });        
-            }
-        });
+        //   const filter = { _id : req.body.group_id };
+        //   const update = { $push: { applied: req.body.user_id } };
+        //   Group.findOneAndUpdate(filter, update, function (error, success) {
+        //     if (error) {
+        //         console.log(error);
+        //     } else {
+        //         console.log(success);
+        //         return res.status(200).json({
+        //           success: true,
+        //         });        
+        //     }
+        // });
+        return res.status(200).json({
+          success: true,
+        });   
         }
       });
 
@@ -86,7 +89,10 @@ router.post("/getMyGroup", (req, res, next) => {
 
 router.post("/getApplicants", (req, res, next) => {
   // console.log(req.body);
-  ApplyLog.find({ user_id : req.body.group_id }).then((tests) => {
+  ApplyLog.find({     $and: [
+    { status: "대기" },
+    { group_id : req.body.group_id }
+ ] }).then((tests) => {
     res.json(tests)
   }).catch((err) => {
     console.log(err);

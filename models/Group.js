@@ -29,9 +29,9 @@ const groupSchema = mongoose.Schema({
     members: [
         String
     ],
-    applied: [
-        String
-    ],
+    // applied: [
+    //     String
+    // ],
 })
 
 const Group = mongoose.model('Group', groupSchema)
