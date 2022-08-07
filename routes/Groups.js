@@ -15,7 +15,7 @@ router.post("/create", (req, res) => {
   });
 });
 
-router.get("/getGroup", (req, res, next) => {
+router.get("/getGroups", (req, res, next) => {
   Group.find().then((tests) => {
     // console.log(tests);
     res.json(tests)
@@ -27,35 +27,35 @@ router.get("/getGroup", (req, res, next) => {
 
 router.post("/apply", (req, res) => {
   // console.log(req.body);
-  ApplyLog.findOne( {
+  ApplyLog.findOne({
     $and: [
-       { user_id: req.body.user_id },
-       { group_id : req.body.group_id }
+      { user_id: req.body.user_id },
+      { group_id: req.body.group_id }
     ]
- }, function (error, result) {
+  }, function (error, result) {
     if (result == null) {
       console.log("중복아이디 없음");
       const group = new ApplyLog(req.body);
       group.save((err) => {
-        if (err){
-          return res.json({ success: false, err }); 
-        } 
-        else{
-        //   const filter = { _id : req.body.group_id };
-        //   const update = { $push: { applied: req.body.user_id } };
-        //   Group.findOneAndUpdate(filter, update, function (error, success) {
-        //     if (error) {
-        //         console.log(error);
-        //     } else {
-        //         console.log(success);
-        //         return res.status(200).json({
-        //           success: true,
-        //         });        
-        //     }
-        // });
-        return res.status(200).json({
-          success: true,
-        });   
+        if (err) {
+          return res.json({ success: false, err });
+        }
+        else {
+          //   const filter = { _id : req.body.group_id };
+          //   const update = { $push: { applied: req.body.user_id } };
+          //   Group.findOneAndUpdate(filter, update, function (error, success) {
+          //     if (error) {
+          //         console.log(error);
+          //     } else {
+          //         console.log(success);
+          //         return res.status(200).json({
+          //           success: true,
+          //         });        
+          //     }
+          // });
+          return res.status(200).json({
+            success: true,
+          });
         }
       });
 
@@ -69,7 +69,7 @@ router.post("/apply", (req, res) => {
 
 router.post("/getAppliedGroup", (req, res, next) => {
   // console.log(req.body);
-  ApplyLog.find({ user_id : req.body.user_id }).then((tests) => {
+  ApplyLog.find({ user_id: req.body.user_id }).then((tests) => {
     res.json(tests)
   }).catch((err) => {
     console.log(err);
@@ -79,7 +79,7 @@ router.post("/getAppliedGroup", (req, res, next) => {
 
 router.post("/getMyGroup", (req, res, next) => {
   console.log(req.body);
-  Group.find({ members : req.body.user_id }).then((tests) => {
+  Group.find({ members: req.body.user_id }).then((tests) => {
     res.json(tests)
   }).catch((err) => {
     console.log(err);
@@ -89,10 +89,48 @@ router.post("/getMyGroup", (req, res, next) => {
 
 router.post("/getApplicants", (req, res, next) => {
   // console.log(req.body);
-  ApplyLog.find({     $and: [
-    { status: "대기" },
-    { group_id : req.body.group_id }
- ] }).then((tests) => {
+  ApplyLog.find({
+    $and: [
+      { status: "대기" },
+      { group_id: req.body.group_id }
+    ]
+  }).then((tests) => {
+    res.json(tests)
+  }).catch((err) => {
+    console.log(err);
+    next(err)
+  });
+});
+
+router.post("/acceptApplicant", (req, res, next) => {
+  // console.log(req.body);
+  ApplyLog.deleteOne({ _id: req.body._id }).then((tests) => {
+    // return res.status(200).json({
+    //   success: true,
+    // });
+  }).catch((err) => {
+    console.log(err);
+    next(err)
+  });
+  const filter = { _id: req.body.group_id };
+  const update = { $push: { members: req.body.user_id } };
+  Group.findOneAndUpdate(filter, update, function (error, success) {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log(success);
+      // return res.status(200).json({
+      //   success: true,
+      // });
+    }
+  });
+  return res.status(200).json({
+    success: true,
+  });
+});
+
+router.post("/getGroup", (req, res, next) => {
+  Group.findOne({ _id: req.body._id }).then((tests) => {
     res.json(tests)
   }).catch((err) => {
     console.log(err);
