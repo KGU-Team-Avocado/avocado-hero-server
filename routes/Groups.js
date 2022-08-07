@@ -170,4 +170,24 @@ router.post("/saveNewNotice", (req, res, next) => {
     });
 });
 
+router.post("/deleteNotice", (req, res, next) => {
+  Group.updateOne(
+    { "_id": req.body._id }, 
+    {$pull: {
+      notices: { "_id": req.body.notice_id }
+    }}).exec((error, notices)=>{
+        if(error){
+            console.log(error);
+            return res.json({status: 'error', error})
+        }else{
+          Group.findOne({ _id: req.body._id }).then((group) => {
+            res.json(group.notices)
+          }).catch((err) => {
+            console.log(err);
+            next(err)
+          });
+        }
+    });
+});
+
 module.exports = router;
