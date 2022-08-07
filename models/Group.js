@@ -26,6 +26,12 @@ const groupSchema = mongoose.Schema({
         type:String,
         required:true
     },
+    notices: [
+        {
+            title: String,
+            description: String
+        }
+    ],
     members: [
         String
     ],

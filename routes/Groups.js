@@ -150,4 +150,24 @@ router.post("/getGroup", (req, res, next) => {
   });
 });
 
+router.post("/saveNewNotice", (req, res, next) => {
+  Group.updateOne(
+    { "_id": req.body._id }, 
+    {$push: {
+      notices: req.body.notice
+    }}).exec((error, notices)=>{
+        if(error){
+            console.log(error);
+            return res.json({status: 'error', error})
+        }else{
+          Group.findOne({ _id: req.body._id }).then((group) => {
+            res.json(group.notices)
+          }).catch((err) => {
+            console.log(err);
+            next(err)
+          });
+        }
+    });
+});
+
 module.exports = router;
