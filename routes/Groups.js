@@ -129,6 +129,18 @@ router.post("/acceptApplicant", (req, res, next) => {
   });
 });
 
+router.post("/rejectApplicant", (req, res, next) => {
+  // console.log(req.body);
+  ApplyLog.updateOne({ _id: req.body._id }, {status:"반려"}).then((tests) => {
+    return res.status(200).json({
+      success: true,
+    });
+  }).catch((err) => {
+    console.log(err);
+    next(err)
+  });
+});
+
 router.post("/getGroup", (req, res, next) => {
   Group.findOne({ _id: req.body._id }).then((tests) => {
     res.json(tests)
