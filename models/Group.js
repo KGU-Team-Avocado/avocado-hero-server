@@ -32,6 +32,31 @@ const groupSchema = mongoose.Schema({
             description: String
         }
     ],
+    events: {
+        recursive: [
+            {
+                title: String,
+                description: String,
+                color: String,
+                allDay: Boolean,
+                startRecur: String,
+                endRecur: String,
+                endTime: String,
+                startRecur: String,
+                daysOfWeek: [ String ]
+            }
+        ],
+        nonrecursive: [
+            {
+                title: String,
+                description: String,
+                color: String,
+                allDay: Boolean,
+                start: String,
+                end: String,
+            }
+        ]
+    },
     members: [
         String
     ],
