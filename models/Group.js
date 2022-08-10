@@ -43,7 +43,6 @@ const groupSchema = mongoose.Schema({
                 startTime: String,
                 endRecur: Date,
                 endTime: String,
-                startRecur: String,
                 daysOfWeek: [ String ]
             }
         ],
