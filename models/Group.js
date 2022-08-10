@@ -39,8 +39,9 @@ const groupSchema = mongoose.Schema({
                 description: String,
                 color: String,
                 allDay: Boolean,
-                startRecur: String,
-                endRecur: String,
+                startRecur: Date,
+                startTime: String,
+                endRecur: Date,
                 endTime: String,
                 startRecur: String,
                 daysOfWeek: [ String ]
@@ -52,8 +53,8 @@ const groupSchema = mongoose.Schema({
                 description: String,
                 color: String,
                 allDay: Boolean,
-                start: String,
-                end: String,
+                start: Date,
+                end: Date,
             }
         ]
     },

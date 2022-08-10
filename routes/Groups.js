@@ -214,4 +214,30 @@ router.post("/modifyNotice", (req, res, next) => {
     });
 });
 
+router.post("/saveNewEvent", async (req, res, next) => {
+  if (req.body.mode === 'recursive') {
+    const events = await Group.updateOne(
+      { "_id": req.body._id },
+      {
+        $push: {
+          'events.recursive': req.body.event
+        }
+      }).exec();
+  } else if (req.body.mode === 'nonrecursive') {
+    const events = await Group.updateOne(
+      { "_id": req.body._id },
+      {
+        $push: {
+          'events.nonrecursive': req.body.event
+        }
+      }).exec();
+  }
+  Group.findOne({ _id: req.body._id }).then((group) => {
+    res.json(group.events)
+  }).catch((err) => {
+    console.log(err);
+    next(err)
+  });
+});
+
 module.exports = router;
