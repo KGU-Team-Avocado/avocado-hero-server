@@ -240,4 +240,18 @@ router.post("/saveNewEvent", async (req, res, next) => {
   });
 });
 
+router.post("/modifyEvent", async (req, res, next) => {
+  const events = await Group.updateOne(
+    { '_id': req.body._id, },
+    { $set: { "events.nonrecursive.$[elem].start": req.body.start, "events.nonrecursive.$[elem].end": req.body.end } },
+    { arrayFilters: [{ "elem._id": req.body.event_id }] }).exec();
+
+  Group.findOne({ _id: req.body._id }).then((group) => {
+    res.json(group.notices)
+  }).catch((err) => {
+    console.log(err);
+    next(err)
+  });
+});
+
 module.exports = router;
