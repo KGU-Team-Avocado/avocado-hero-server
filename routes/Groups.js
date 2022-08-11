@@ -254,4 +254,31 @@ router.post("/modifyEvent", async (req, res, next) => {
   });
 });
 
+router.post("/deleteEvent", async (req, res, next) => {
+  if (req.body.mode === 'recursive') {
+    const events = await Group.updateOne(
+      { "_id": req.body._id },
+      {
+        $pull: {
+          'events.recursive': { "_id": req.body.event_id }
+        }
+      }).exec();
+  } else if (req.body.mode === 'nonrecursive') {
+    const events = await Group.updateOne(
+      { "_id": req.body._id },
+      {
+        $pull: {
+          'events.nonrecursive': { "_id": req.body.event_id }
+        }
+      }).exec();
+  }
+
+  Group.findOne({ _id: req.body._id }).then((group) => {
+    res.json(group.events)
+  }).catch((err) => {
+    console.log(err);
+    next(err)
+  });
+});
+
 module.exports = router;
