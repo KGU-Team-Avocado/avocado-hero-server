@@ -5,6 +5,14 @@ const applyLogSchema = mongoose.Schema({
         type: String,
         required: true  // not null
     },
+    group_name: {
+        type: String,
+        required: true  // not null
+    },
+    project_name: {
+        type: String,
+        required: true  // not null
+    },
     user_id: {
         type: String,
         required: true  // not null
