@@ -56,7 +56,7 @@ router.post("/login", (req, res) => {
         } else {
           console.log(new User())
           LoginLog.find().then((tests) => {
-            new LoginLog({ secure_num:tests.length, user_id: user.user_id, time: new Date() }).save();
+            new LoginLog({ secure_num: tests.length, user_id: user.user_id, time: new Date() }).save();
           }).catch((err) => {
             console.log(err);
           });
@@ -85,10 +85,23 @@ router.post("/findUser", (req, res) => {
         return res.json({ status: "fail", user: user });
       } else {
         let securedUser = user
-        securedUser['user_password']=""
+        securedUser['user_password'] = ""
         console.log(securedUser)
         return res.json({ status: "success", user: securedUser });
       }
+    }
+  });
+});
+
+
+router.post("/findUsers", (req, res) => {
+  User.find({}, function (error, user) {
+    console.log(user)
+    if (error) {
+      console.log(error);
+      return res.json({ status: "error", user: user });
+    } else {
+      return res.json({ status: "success", user: user });
     }
   });
 });
@@ -98,16 +111,16 @@ router.post("/profileUpdate", (req, res) => {
 
   console.log(req.body);
 
- User.findOneAndUpdate({user_id: {$eq:account.user_id} },
+  User.findOneAndUpdate({ user_id: { $eq: account.user_id } },
     req.body, null, function (err, docs) {
-    if (err){
+      if (err) {
         console.log(err)
-    }
-    else{
-        console.log("Original Doc : ",docs);
-    }
-});
-    
+      }
+      else {
+        console.log("Original Doc : ", docs);
+      }
+    });
+
 });
 
 
