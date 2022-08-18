@@ -58,7 +58,12 @@ const groupSchema = mongoose.Schema({
         ]
     },
     members: [
-        String
+        {
+            user_id: String,
+            user_name: String,
+            user_email: String,
+            user_role: Array
+        }
     ],
     // applied: [
     //     String

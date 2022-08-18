@@ -79,7 +79,7 @@ router.post("/getAppliedGroup", (req, res, next) => {
 
 router.post("/getMyGroup", (req, res, next) => {
   console.log(req.body);
-  Group.find({ members: req.body.user_id }).then((tests) => {
+  Group.find({ 'members.user_id': req.body.user_id }).then((tests) => {
     res.json(tests)
   }).catch((err) => {
     console.log(err);
@@ -113,7 +113,7 @@ router.post("/acceptApplicant", (req, res, next) => {
     next(err)
   });
   const filter = { _id: req.body.group_id };
-  const update = { $push: { members: req.body.user_id } };
+  const update = { $push: { members: req.body.data } };
   Group.findOneAndUpdate(filter, update, function (error, success) {
     if (error) {
       console.log(error);
