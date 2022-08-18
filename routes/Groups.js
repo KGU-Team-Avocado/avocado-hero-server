@@ -281,4 +281,18 @@ router.post("/deleteEvent", async (req, res, next) => {
   });
 });
 
+router.post("/updateRole", async (req, res, next) => {
+  const members = await Group.updateOne(
+    { '_id': req.body._id, },
+    { $set: { "members.$[elem].user_role": req.body.user_role } },
+    { arrayFilters: [{ "elem.user_id": req.body.user_id }] }).exec();
+
+  Group.findOne({ _id: req.body._id }).then((group) => {
+    res.json(group.members)
+  }).catch((err) => {
+    console.log(err);
+    next(err)
+  });
+});
+
 module.exports = router;
