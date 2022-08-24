@@ -104,14 +104,25 @@ router.post("/getApplicants", (req, res, next) => {
 
 router.post("/acceptApplicant", (req, res, next) => {
   // console.log(req.body);
+  let applyLog = {};
+
   ApplyLog.deleteOne({ _id: req.body._id }).then((tests) => {
-    // return res.status(200).json({
-    //   success: true,
-    // });
+    ApplyLog.find({
+      $and: [
+        { status: "대기" },
+        { group_id: req.body.group_id }
+      ]
+    }).then((tests) => {
+      applyLog = tests;
+    }).catch((err) => {
+      console.log(err);
+      next(err)
+    });
   }).catch((err) => {
     console.log(err);
     next(err)
   });
+
   const filter = { _id: req.body.group_id };
   const update = { $push: { members: req.body.data } };
   Group.findOneAndUpdate(filter, update, function (error, success) {
@@ -119,26 +130,58 @@ router.post("/acceptApplicant", (req, res, next) => {
       console.log(error);
     } else {
       console.log(success);
-      // return res.status(200).json({
-      //   success: true,
-      // });
+      Group.findOne({ _id: req.body.group_id }).then((group) => {
+        res.json({applicants: applyLog, members: group.members})
+      }).catch((err) => {
+        console.log(err);
+        next(err)
+      });
     }
-  });
-  return res.status(200).json({
-    success: true,
   });
 });
 
 router.post("/rejectApplicant", (req, res, next) => {
   // console.log(req.body);
   ApplyLog.updateOne({ _id: req.body._id }, {status:"반려"}).then((tests) => {
-    return res.status(200).json({
-      success: true,
+    ApplyLog.find({
+      $and: [
+        { status: "대기" },
+        { group_id: req.body.group_id }
+      ]
+    }).then((applicants) => {
+      res.json(applicants);
+    }).catch((err) => {
+      console.log(err);
+      next(err)
     });
   }).catch((err) => {
     console.log(err);
     next(err)
   });
+});
+
+
+router.post("/cancleAccept", (req, res, next) => {
+  // console.log(req.body);
+  Group.updateOne(
+    { "_id": req.body.project_id },
+    {
+      $pull: {
+        members: { "user_id": req.body.user_id }
+      }
+    }).exec((error, notices) => {
+      if (error) {
+        console.log(error);
+        return res.json({ status: 'error', error })
+      } else {
+        Group.findOne({ _id: req.body.project_id }).then((group) => {
+          res.json(group.members)
+        }).catch((err) => {
+          console.log(err);
+          next(err)
+        });
+      }
+    });
 });
 
 router.post("/getGroup", (req, res, next) => {
