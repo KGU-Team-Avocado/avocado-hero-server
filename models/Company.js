@@ -1,41 +1,47 @@
 const mongoose = require("mongoose");
 
 const companySchema = mongoose.Schema({
-  company_id: {
-    type: String,
-    maxlength: 30,
-    unique: 1,
-  },
-  company_company_name: {
+    name: {
     type: String,
     maxlength: 30,
   },
-  company_title: {
+   title: {
     type: String,
     maxlength: 30,
   },
-  company_field: {
+  
+   field: {
     type: String,
     maxlength: 30,
   },
-  company_recruit_number: {
+   recruit_number: {
     type: String,
     maxlength: 30,
     //unique: 1,
     trim: true, //공백제거
   },
-  company_tag: {
+   tag: {
     type: String,
   },
-  company_period: {
+   period: {
     type: String,
     maxlength: 30,
   },
-  company_site: {
+   site: {
+    type: String,
+  },
+   description: {
     type: String,
   },
   // -- 기본 정보 --
 });
 
-const Company = mongoose.model("Company", companySchema);
+/**
+ * 
+ * @param field 분야
+ * @param period 마감일
+ * @param tag 기술
+ * 
+ */
+const Company = mongoose.model('Company', companySchema);
 module.exports = { Company };

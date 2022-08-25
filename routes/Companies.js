@@ -129,21 +129,22 @@ router.post("/jobPost", (req,res) => {
   // };
 
   const company = new Company(req.body);
-  const company_id = company.company_id;
+  const title = company.title;
   console.log(req.body);
 
-  Company.findOne({ company_id: company_id }, function (error, result) {
+  Company.findOne({ title: title }, function (error, result) {
     if (result == null) {
-      console.log("중복 기업아이디 없음");
+      console.log("중복된 제목의 글 없음");
 
       company.save((err, userInfo) => {
         if (err) return res.json({ success: false, err });
+        console.log("하이");
         return res.status(200).json({
           success: true,
         });
       });
     } else {
-      //res.send("중복된 기업아이디입니다.");
+      //res.send("중복된 제목의 글 입니다.");
       return res.json({ compIdCheck: false });
     }
   });
