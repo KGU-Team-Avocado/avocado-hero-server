@@ -186,7 +186,7 @@ router.post("/cancleAccept", (req, res, next) => {
 
 router.post("/getGroup", (req, res, next) => {
   Group.findOne({ _id: req.body._id }).then((tests) => {
-    res.json(tests)
+    return res.json(tests)
   }).catch((err) => {
     console.log(err);
     next(err)
