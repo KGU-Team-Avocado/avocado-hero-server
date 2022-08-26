@@ -26,13 +26,15 @@ router.post("/bookmarkSave", function(req, res) {
 
 router.post("/getMyBookmark", (req, res, next) => {
     console.log(req.body);
-  Bookmark.findOne({user_id: req.body.user_id}).then((bookmarks) => {
-    console.log(bookmarks);
-    res.json(bookmarks)
-  }).catch((err) => {
-    console.log(err);
-    next(err)
-  });
+    Bookmark.findOne({ user_id: req.body.user_id }).then((bookmarks) => {
+        console.log(bookmarks.company_id);
+        Company.find({'_id': { $in: bookmarks.company_id }}).then((companies) => {
+            res.json(companies);
+        })
+    }).catch((err) => {
+        console.log(err);
+        next(err)
+    });
 });
 
 module.exports = router;
