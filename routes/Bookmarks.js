@@ -24,6 +24,15 @@ router.post("/bookmarkSave", function(req, res) {
     });
 });
 
-
+router.post("/getMyBookmark", (req, res, next) => {
+    console.log(req.body);
+  Bookmark.findOne({user_id: req.body.user_id}).then((bookmarks) => {
+    console.log(bookmarks);
+    res.json(bookmarks)
+  }).catch((err) => {
+    console.log(err);
+    next(err)
+  });
+});
 
 module.exports = router;
