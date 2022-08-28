@@ -65,6 +65,14 @@ const groupSchema = mongoose.Schema({
             user_role: Array
         }
     ],
+    close_application: {
+        type: Boolean,
+        required: true
+    },
+    end_project: {
+        type: Boolean,
+        required: true
+    },
     // applied: [
     //     String
     // ],
