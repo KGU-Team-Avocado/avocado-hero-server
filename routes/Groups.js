@@ -185,6 +185,7 @@ router.post("/cancleAccept", (req, res, next) => {
 });
 
 router.post("/getGroup", (req, res, next) => {
+
   Group.findOne({ _id: req.body._id }).then((tests) => {
     return res.json(tests)
   }).catch((err) => {
@@ -336,6 +337,25 @@ router.post("/updateRole", async (req, res, next) => {
     console.log(err);
     next(err)
   });
+});
+
+router.post("/modifyClose", (req, res, next) => {
+  Group.updateOne(
+    { '_id': req.body.project_id, },
+    { $set: { "close_application": req.body.close_application } }).exec((error) => {
+      if (error) {
+        console.log(error);
+        return res.json({ status: 'error', error })
+      } else {
+        console.log('modified!')
+        Group.findOne({ _id: req.body.project_id }).then((group) => {
+          return res.json(group.close_application)
+        }).catch((err) => {
+          console.log(err);
+          next(err)
+        });
+      }
+    });
 });
 
 module.exports = router;
