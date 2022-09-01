@@ -358,4 +358,17 @@ router.post("/modifyClose", (req, res, next) => {
     });
 });
 
+router.post("/endProject", async (req, res, next) => {
+  const members = await Group.updateOne(
+    { '_id': req.body.project_id, },
+    { $set: { "end_project": true } }).exec();
+
+  Group.findOne({ _id: req.body._id }).then((group) => {
+    res.json(group)
+  }).catch((err) => {
+    console.log(err);
+    next(err)
+  });
+});
+
 module.exports = router;
