@@ -360,7 +360,7 @@ router.post("/modifyClose", (req, res, next) => {
 
 router.post("/endProject", async (req, res, next) => {
   const members = await Group.updateOne(
-    { '_id': req.body.project_id, },
+    { '_id': req.body._id, },
     { $set: { "end_project": true } }).exec();
 
   Group.findOne({ _id: req.body._id }).then((group) => {
