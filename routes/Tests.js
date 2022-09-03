@@ -5,6 +5,12 @@ const { Test } = require("../models/Test");
 
 // http://localhost:5000 에서 확인하기 쉽도록 get을 위주로 구현하였지만 실제 프론트에서 사용할 때 데이터를 넘기는 것은 post 방식이 더 쉽고 보안적으로도 좋다고 생각함.
 
+router.post('/uploadFile', function (req, res) {
+    console.log(req)
+    res.json('ㅇㅇ')
+});
+
+
 /* GET. */
 router.get('/findLogs', function (req, res, next) {
     // 전체 데이터 가져오기
