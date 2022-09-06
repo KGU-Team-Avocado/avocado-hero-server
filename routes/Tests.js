@@ -8,7 +8,6 @@ const multer = require('multer')
 // http://localhost:5000 에서 확인하기 쉽도록 get을 위주로 구현하였지만 실제 프론트에서 사용할 때 데이터를 넘기는 것은 post 방식이 더 쉽고 보안적으로도 좋다고 생각함.
 
 //업로드 관련 코드 시작
-
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
       cb(null, 'uploadedFile/')

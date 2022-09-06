@@ -3,6 +3,8 @@ const router = express.Router();
 const bodyParser = require("body-parser");
 const { User } = require("../models/User");
 const { LoginLog } = require("../models/LoginLog");
+const multer = require('multer')
+
 
 // //application/x-www-form-urlencoded
 // app.use(bodyParser.urlencoded({ extended: true }));
@@ -122,6 +124,25 @@ router.post("/profileUpdate", (req, res) => {
     });
 
 });
+
+//업로드 관련 코드 시작
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'uploadedFile/image/profile')
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.originalname)
+  },
+})
+
+const upload = multer({ storage: storage })
+
+router.post('/uploadImage', upload.single('file'), function (req, res) {
+  res.json({})
+})
+
+//업로드 관련 코드 끝
 
 
 module.exports = router;
