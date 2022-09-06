@@ -8,6 +8,7 @@ const usersRouter = require("./routes/Users");
 const groupsRouter = require("./routes/Groups");
 const companiesRouter = require("./routes/Companies");
 const bookmarksRouter = require("./routes/Bookmarks");
+const todosRouter = require("./routes/Todos");
 
 
 //application/x-www-form-urlencoded
@@ -54,3 +55,4 @@ app.use("/usersRouter", usersRouter);
 app.use("/groupsRouter", groupsRouter);
 app.use("/companiesRouter", companiesRouter);
 app.use("/bookmarksRouter", bookmarksRouter);
+app.use("/todosRouter", todosRouter);
