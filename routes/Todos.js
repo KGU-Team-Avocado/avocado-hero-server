@@ -15,19 +15,31 @@ router.post("/todoCreate", (req,res) => {
     });
 })
 
-// router.post("/postFindOne", (req, res) => {
-//     console.log("Todos.js postFindOne입니당");
-//     console.log(req.body);
-//     // 특정 아이디값 가져오기
-//     const project_id = req.body.project_id; // 프론트에서 post을 이용해 파라미터로 id를 넘겨줌
-//     Todo.findOne({project_id: project_id}, function(error,todos){
-//         if(error){
-//             console.log(error);
-//         }else{
-//             console.log(todos);
-//             res.json(todos)
-//         }
-//     });
-// });
+router.post("/postFind", (req, res) => {
+    console.log("Todos.js postFindOne입니당");
+    console.log(req.body);
+    // 특정 아이디값 가져오기
+    const project_id = req.body.project_id; // 프론트에서 post을 이용해 파라미터로 id를 넘겨줌
+    // Todo.findOne({project_id: project_id}, function(error,todos){
+    //     if(error){
+    //         console.log(error);
+    //     }else{
+    //         console.log(todos);
+    //         res.json(todos)
+    //     }
+    // });
+    Todo.find( {
+        project_id : project_id
+    },
+        function(error,todos){
+                if(error){
+                    console.log(error);
+                }else{
+                    console.log(todos);
+                    res.json(todos)
+                }
+            }
+    )
+});
 
 module.exports = router;
