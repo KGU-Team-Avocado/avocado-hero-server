@@ -9,7 +9,7 @@ const groupsRouter = require("./routes/Groups");
 const companiesRouter = require("./routes/Companies");
 const bookmarksRouter = require("./routes/Bookmarks");
 const todosRouter = require("./routes/Todos");
-
+const evaluationsRouter = require("./routes/Evaluations");
 
 //application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
@@ -56,3 +56,4 @@ app.use("/groupsRouter", groupsRouter);
 app.use("/companiesRouter", companiesRouter);
 app.use("/bookmarksRouter", bookmarksRouter);
 app.use("/todosRouter", todosRouter);
+app.use("/evaluationsRouter", evaluationsRouter);
