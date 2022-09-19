@@ -69,4 +69,19 @@ router.post("/Delete", (req, res) => {
     )
 })
 
+router.post("/DeleteAll", (req, res) => {
+    Todo.deleteMany(
+        {project_id : req.body.project_id},
+
+        function(error,todos){
+            if(error){
+                console.log(error);
+            }else{
+                console.log(todos);
+                res.json(todos)
+            }
+        }
+    )
+})
+
 module.exports = router;
