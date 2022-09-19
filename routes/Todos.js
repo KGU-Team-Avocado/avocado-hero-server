@@ -54,7 +54,7 @@ router.post("/updateIsChecked", (req, res) => {
 });
 
 router.post("/Delete", (req, res) => {
-    console.log("삭제" + req.body._id)
+    // console.log("삭제" + req.body._id)
     Todo.findOneAndDelete(
         {_id : req.body._id},
 
@@ -72,6 +72,24 @@ router.post("/Delete", (req, res) => {
 router.post("/DeleteAll", (req, res) => {
     Todo.deleteMany(
         {project_id : req.body.project_id},
+
+        function(error,todos){
+            if(error){
+                console.log(error);
+            }else{
+                console.log(todos);
+                res.json(todos)
+            }
+        }
+    )
+})
+
+router.post("/DeleteComplete", (req,res) => {
+    Todo.deleteMany(
+        {
+            project_id : req.body.project_id,
+            todo_isChecked : "true",
+        },
 
         function(error,todos){
             if(error){
