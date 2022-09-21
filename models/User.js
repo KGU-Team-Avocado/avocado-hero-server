@@ -64,6 +64,10 @@ const userSchema = mongoose.Schema({
   user_keyword: [String],
   user_personality: [String], // 성향,
   user_groups: [String],
+  user_one_intro: {
+    type: String,
+    default: 'undefined',
+  }
 });
 
 userSchema.pre("save", function (next) {
