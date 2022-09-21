@@ -66,7 +66,7 @@ const userSchema = mongoose.Schema({
   user_groups: [String],
   user_one_intro: {
     type: String,
-    default: 'undefined',
+    default: 'undefine', 
   }
 });
 
