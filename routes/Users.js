@@ -62,12 +62,13 @@ router.post("/login", (req, res) => {
           }).catch((err) => {
             console.log(err);
           });
-          const securedUser = {
-            user_id: user.user_id,
-            user_name: user.user_name,
-            user_email: user.user_email,
-          };
-          return res.json({ status: "success", user: securedUser });
+          // const securedUser = {
+          //   user_id: user.user_id,
+          //   user_name: user.user_name,
+          //   user_email: user.user_email,
+          // };
+          delete user._doc.user_password
+          return res.json({ status: "success", user });
         }
       }
     }
