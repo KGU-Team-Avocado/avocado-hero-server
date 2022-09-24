@@ -42,6 +42,7 @@ router.post("/register", (req, res) => {
 router.post("/login", (req, res) => {
   // post 요청을 처리해 응답을 주는 함수가 들어올 위치.
   const account = req.body;
+  console.log(account)
   User.findOne(
     {
       $and: [{ user_id: account.id }, { user_password: account.password }],
