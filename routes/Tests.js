@@ -3,7 +3,7 @@ const { LoginLog } = require('../models/LoginLog');
 const router = express.Router();
 const { Test } = require("../models/Test");
 const multer = require('multer')
-
+const path = require("path");
 
 // http://localhost:5000 에서 확인하기 쉽도록 get을 위주로 구현하였지만 실제 프론트에서 사용할 때 데이터를 넘기는 것은 post 방식이 더 쉽고 보안적으로도 좋다고 생각함.
 
@@ -14,7 +14,8 @@ const storage = multer.diskStorage({
     },
     filename: (req, file, cb) => {
         console.log(req);
-        const fileName = `${req.body.user_id}.${file.originalname.split('.').reverse()[0]}`
+        // const fileName = `${req.body.user_id}.${file.originalname.split('.').reverse()[0]}`
+        const fileName = `${req.body.user_id}`
         // console.log(fileName)
         cb(null, fileName)
     },
@@ -27,6 +28,18 @@ router.post('/uploadFile', upload.single('file'), function (req, res) {
 })
 
 //업로드 관련 코드 끝
+
+// 사진 찾기 관련 코드 시작
+
+router.get('/testImg/:id', function (req, res) {
+    // 특정 아이디값 가져오기
+    const id = req.params.id;
+    // 프론트에서 get을 이용해 파라미터로 id를 넘겨줌 
+    console.log(id)
+    res.sendFile(path.join(__dirname, `../uploadedFile/${id}`));
+});
+
+// 사진 찾기 관련 코드 끝
 
 
 /* GET. */
