@@ -10,18 +10,19 @@ const multer = require('multer')
 //업로드 관련 코드 시작
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-      cb(null, 'uploadedFile/')
+        cb(null, 'uploadedFile/')
     },
     filename: (req, file, cb) => {
-      cb(null, file.originalname)
+        cb(null, file.originalname)
     },
-  })
-  
-  const upload = multer({ storage: storage })
+})
 
-  router.post('/uploadFile', upload.single('file'), function (req, res) {
+const upload = multer({ storage: storage })
+
+router.post('/uploadFile', upload.single('file'), function (req, res) {
+    console.log(req.params)
     res.json({})
-  })
+})
 
 //업로드 관련 코드 끝
 
@@ -66,78 +67,82 @@ router.get('/findOne/:test_id', function (req, res) {
 });
 
 // 테스트를 위해 랜덤 id로 새로운 데이터 저장
-router.get('/save', function(req, res) {
+router.get('/save', function (req, res) {
     const test_id = Math.floor(Math.random() * 1000);
     // 데이터 저장
-    var newTest = new Test({test_id: test_id, test_num: 1}); // required가 true가 아니면 생략해도 저장 가능
-    newTest.save(function(error, test){
-        if(error){
+    var newTest = new Test({ test_id: test_id, test_num: 1 }); // required가 true가 아니면 생략해도 저장 가능
+    newTest.save(function (error, test) {
+        if (error) {
             console.log(error);
-            return res.json({status: 'duplicated', error}) // unique를 1로 줬던 필드의 값이 겹침(중복)
-        }else{
+            return res.json({ status: 'duplicated', error }) // unique를 1로 줬던 필드의 값이 겹침(중복)
+        } else {
             console.log('Saved!')
-            return res.json({status: 'success', data: test})
+            return res.json({ status: 'success', data: test })
         }
     });
 });
 
-router.get('/modify/:test_id', function(req, res, next) {
-     // 특정 아이디값 가져오기
-     const test_id = req.params.test_id; 
+router.get('/modify/:test_id', function (req, res, next) {
+    // 특정 아이디값 가져오기
+    const test_id = req.params.test_id;
     // 특정아이디 수정하기
     Test.updateOne(
-        { test_id: test_id }, 
-        {$push: {test_json_list: {
-            "date": "asdf", 
-            "value": "qwer",
-            "isDone": true,
-            "key": "123"
-        }}}).exec((error, output)=>{
-            if(error){
+        { test_id: test_id },
+        {
+            $push: {
+                test_json_list: {
+                    "date": "asdf",
+                    "value": "qwer",
+                    "isDone": true,
+                    "key": "123"
+                }
+            }
+        }).exec((error, output) => {
+            if (error) {
                 console.log(error);
-                res.json({status: 'error', error})
-            }else{
+                res.json({ status: 'error', error })
+            } else {
                 console.log('Saved!')
-                res.json({status: 'success', output: output})
+                res.json({ status: 'success', output: output })
             }
         });
 });
 
-router.get('/delete/:test_id', function(req, res, next) {
+router.get('/delete/:test_id', function (req, res, next) {
     // 삭제
-    Test.remove({test_id: req.params.test_id}, function(error,output){
+    Test.remove({ test_id: req.params.test_id }, function (error, output) {
         console.log('--- Delete ---');
-        if(error){
+        if (error) {
             console.log(error);
         }
-        res.json({status: 'success', output: output})
+        res.json({ status: 'success', output: output })
         console.log('--- deleted ---');
     });
 });
 
 /* POST */
-router.post('/postSave', function(req, res) {
+router.post('/postSave', function (req, res) {
     console.log(req.body); // 프론트에서 스키마 형식에 맞는 데이터 넘겨줌
     // 데이터 저장
     var newTest = new Test(req.body.data);
-    newTest.save(function(error, data){
-        if(error){
+    newTest.save(function (error, data) {
+        if (error) {
             console.log(error);
-            return res.json({status: 'duplicated', error}) // unique를 1로 줬던 필드의 값이 겹침(중복)
-        }else{
+            return res.json({ status: 'duplicated', error }) // unique를 1로 줬던 필드의 값이 겹침(중복)
+        } else {
             console.log('Saved!')
-            return res.json({status: 'success'})
+            return res.json({ status: 'success' })
         }
     });
 });
 
-router.post('/postFindOne/', function(req, res) {
+router.post('/postFindOne/', function (req, res) {
     // 특정 아이디값 가져오기
     const test_id = req.body.data.test_id; // 프론트에서 post을 이용해 파라미터로 id를 넘겨줌
-    User.findOne({test_id: test_id}, function(error,tests){
-        if(error){
+    User.findOne({ test_id: test_id }, function (error, tests) {
+        if (error) {
             console.log(error);
-        }else{
+        } else {
             res.json(tests)
         }
     });
@@ -170,16 +175,16 @@ router.post('/postModify', function (req, res, next) {
         });
 });
 
-router.post('/postDelete', function(req, res, next) {
-   // 삭제
-   Test.remove({test_id: req.body.data.test_id}, function(error,output){
-       console.log('--- Delete ---');
-       if(error){
-           console.log(error);
-       }
-       res.json({status: 'success', output: output})
-       console.log('--- deleted ---');
-   });
+router.post('/postDelete', function (req, res, next) {
+    // 삭제
+    Test.remove({ test_id: req.body.data.test_id }, function (error, output) {
+        console.log('--- Delete ---');
+        if (error) {
+            console.log(error);
+        }
+        res.json({ status: 'success', output: output })
+        console.log('--- deleted ---');
+    });
 });
 
 module.exports = router;
