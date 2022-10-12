@@ -13,14 +13,15 @@ const storage = multer.diskStorage({
         cb(null, 'uploadedFile/')
     },
     filename: (req, file, cb) => {
-        cb(null, file.originalname)
+        const fileName = `${req.body.user_id}.${file.originalname.split('.').reverse()[0]}`
+        console.log(fileName)
+        cb(null, fileName)
     },
 })
 
 const upload = multer({ storage: storage })
 
 router.post('/uploadFile', upload.single('file'), function (req, res) {
-    console.log(req.params)
     res.json({})
 })
 
