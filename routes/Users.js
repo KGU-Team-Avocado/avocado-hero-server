@@ -4,7 +4,7 @@ const bodyParser = require("body-parser");
 const { User } = require("../models/User");
 const { LoginLog } = require("../models/LoginLog");
 const multer = require('multer')
-
+const path = require("path");
 
 // //application/x-www-form-urlencoded
 // app.use(bodyParser.urlencoded({ extended: true }));
@@ -146,5 +146,16 @@ router.post('/uploadImage', upload.single('file'), function (req, res) {
 
 //업로드 관련 코드 끝
 
+// 사진 찾기 관련 코드 시작
+
+router.get('/profileImage/:id', function (req, res) {
+  // 특정 아이디값 가져오기
+  const id = req.params.id;
+  // 프론트에서 get을 이용해 파라미터로 id를 넘겨줌 
+  console.log(id)
+  res.sendFile(path.join(__dirname, `../uploadedFile/image/profile/${id}`));
+});
+
+// 사진 찾기 관련 코드 끝
 
 module.exports = router;
