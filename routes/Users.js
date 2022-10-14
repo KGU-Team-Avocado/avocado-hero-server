@@ -128,13 +128,16 @@ router.post("/profileUpdate", (req, res) => {
 });
 
 //업로드 관련 코드 시작
-
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'uploadedFile/image/profile')
+      cb(null, 'uploadedFile/image/profile')
   },
   filename: (req, file, cb) => {
-    cb(null, file.originalname)
+      console.log(req);
+      // const fileName = `${req.body.user_id}.${file.originalname.split('.').reverse()[0]}`
+      const fileName = `${req.body.user_id}`
+      // console.log(fileName)
+      cb(null, fileName)
   },
 })
 
