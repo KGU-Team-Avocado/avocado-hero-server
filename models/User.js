@@ -14,59 +14,59 @@ const userSchema = mongoose.Schema({
     maxlength: 30,
     default: 'undefined',
   },
-  user_name: {
+  name: {
     type: String,
     maxlength: 30,
     default: 'undefined',
   },
-  user_email: {
+  email: {
     type: String,
     maxlength: 30,
     //unique: 1,
     trim: true, //공백제거
     default: 'undefined',
   },
-  user_type: {
+  type: {
     type: String,
     default: 'undefined',
   },
-  user_phoneNum: {
-    type: String,
-    maxlength: 30,
-    default: 'undefined',
-  },
-  user_age: {
-    type: String,
-    default: 'undefined',
-  },
-  user_nickname: {
+  phoneNumber: {
     type: String,
     maxlength: 30,
     default: 'undefined',
   },
-  user_img: {
+  age: {
+    type: String,
+    default: 'undefined',
+  },
+  nickname: {
+    type: String,
+    maxlength: 30,
+    default: 'undefined',
+  },
+  imgURL: {
     // 사진
     type: String,
     default: 'undefined',
   },
   // -- 기본 정보 --
 
-  user_belong: [String],
-  user_field: [String],
-  user_link: [String],
+  belongs: [String],
+  fields: [String],
+  links: [String],
   // -- 스펙 관련 --
 
-  user_intro: {
+  introduce: {
     // 소개글
     type: String,
     default: 'undefined',
   },
-  user_keyword: [String],
-  user_personality: [String], // 성향,
-  user_groups: [String],
-  user_one_intro: {
+  keywords: [String],
+  personalities: [String], // 성향,
+  groups: [String],
+  introduceOne: {
     type: String,
-    default: 'undefine', 
+    default: 'undefined', 
   }
 });
 

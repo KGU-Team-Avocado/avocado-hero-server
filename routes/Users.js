@@ -42,32 +42,22 @@ router.post("/register", (req, res) => {
 router.post("/login", (req, res) => {
   // post 요청을 처리해 응답을 주는 함수가 들어올 위치.
   const account = req.body;
-  console.log(account)
+  // console.log('account : '+account)
   User.findOne(
-    {
-      $and: [{ user_id: account.id }, { user_password: account.password }],
-    },
+    { $and: [{ user_id: account.id }, { user_password: account.password }] },
     function (error, user) {
       if (error) {
         console.log(error);
         return res.json({ status: "error", user: user });
       } else {
-        console.log(user)
-        console.log('---')
         if (user === null) {
           return res.json({ status: "fail", user: user });
         } else {
-          console.log(new User())
           LoginLog.find().then((tests) => {
             new LoginLog({ secure_num: tests.length, user_id: user.user_id, time: new Date() }).save();
           }).catch((err) => {
             console.log(err);
           });
-          // const securedUser = {
-          //   user_id: user.user_id,
-          //   user_name: user.user_name,
-          //   user_email: user.user_email,
-          // };
           delete user._doc.user_password
           return res.json({ status: "success", user });
         }
@@ -78,7 +68,7 @@ router.post("/login", (req, res) => {
 
 router.post("/findUser", (req, res) => {
   const account = req.body;
-  console.log("ac" + account);
+  // console.log("ac" + account);
   User.findOne({ user_id: account.user_id }, function (error, user) {
     if (error) {
       console.log(error);
@@ -90,7 +80,7 @@ router.post("/findUser", (req, res) => {
       } else {
         let securedUser = user
         securedUser['user_password'] = ""
-        console.log(securedUser)
+        // console.log(securedUser)
         return res.json({ status: "success", user: securedUser });
       }
     }
@@ -130,14 +120,14 @@ router.post("/profileUpdate", (req, res) => {
 //업로드 관련 코드 시작
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-      cb(null, 'uploadedFile/image/profile')
+    cb(null, 'uploadedFile/image/profile')
   },
   filename: (req, file, cb) => {
-      console.log(req);
-      // const fileName = `${req.body.user_id}.${file.originalname.split('.').reverse()[0]}`
-      const fileName = `${req.body.user_id}`
-      // console.log(fileName)
-      cb(null, fileName)
+    console.log(req);
+    // const fileName = `${req.body.user_id}.${file.originalname.split('.').reverse()[0]}`
+    const fileName = `${req.body.user_id}`
+    // console.log(fileName)
+    cb(null, fileName)
   },
 })
 
@@ -156,8 +146,8 @@ router.get('/profileImage/:id', function (req, res) {
   const id = req.params.id;
   // 프론트에서 get을 이용해 파라미터로 id를 넘겨줌 
   console.log(id)
-  res.sendFile(path.join(__dirname, `../uploadedFile/image/profile/${id}`), function(err){
-    if(err){
+  res.sendFile(path.join(__dirname, `../uploadedFile/image/profile/${id}`), function (err) {
+    if (err) {
       res.json({})
     }
   });
