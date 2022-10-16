@@ -103,7 +103,7 @@ router.post("/findUsers", (req, res) => {
 router.post("/profileUpdate", (req, res) => {
   const account = req.body;
 
-  console.log(req.body);
+  // console.log(req.body);
 
   User.findOneAndUpdate({ user_id: { $eq: account.user_id } },
     req.body, null, function (err, docs) {
