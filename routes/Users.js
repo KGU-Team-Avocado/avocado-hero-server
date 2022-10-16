@@ -156,7 +156,11 @@ router.get('/profileImage/:id', function (req, res) {
   const id = req.params.id;
   // 프론트에서 get을 이용해 파라미터로 id를 넘겨줌 
   console.log(id)
-  res.sendFile(path.join(__dirname, `../uploadedFile/image/profile/${id}`));
+  res.sendFile(path.join(__dirname, `../uploadedFile/image/profile/${id}`), function(err){
+    if(err){
+      res.json({})
+    }
+  });
 });
 
 // 사진 찾기 관련 코드 끝
