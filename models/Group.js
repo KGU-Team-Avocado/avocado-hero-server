@@ -19,6 +19,10 @@ const groupSchema = mongoose.Schema({
         type: String,
         required: true  // not null
     },
+    imageURL:{
+        type:String,
+        default:null,
+    },
     tech_stack: [
         String
     ],
@@ -73,9 +77,14 @@ const groupSchema = mongoose.Schema({
         type: Boolean,
         required: true
     },
-    // applied: [
-    //     String
-    // ],
+    start_date:{
+        type:Date,
+        default:new Date(),
+    },
+    end_date:{
+        type:Date,
+        default:null,
+    },
 })
 
 const Group = mongoose.model('Group', groupSchema)
