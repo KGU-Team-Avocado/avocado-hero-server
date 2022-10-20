@@ -33,6 +33,22 @@ router.post('/uploadImage', upload.single('file'), function (req, res) {
 
 //업로드 관련 코드 끝
 
+// 사진 찾기 관련 코드 시작
+
+router.get('/groupImage/:url', function (req, res) {
+  // 특정 아이디값 가져오기
+  const url = req.params.url;
+  // 프론트에서 get을 이용해 파라미터로 id를 넘겨줌 
+  // console.log(url)
+  res.sendFile(path.join(__dirname, `../uploadedFile/image/group/${url}`), function (err) {
+    if (err) {
+      res.json({})
+    }
+  });
+});
+
+// 사진 찾기 관련 코드 끝
+
 router.post("/create", (req, res) => {
   console.log(req.body);
   const group = new Group(req.body);

@@ -150,7 +150,7 @@ router.get('/profileImage/:id', function (req, res) {
   // 특정 아이디값 가져오기
   const id = req.params.id;
   // 프론트에서 get을 이용해 파라미터로 id를 넘겨줌 
-  console.log(id)
+  // console.log(id)
   res.sendFile(path.join(__dirname, `../uploadedFile/image/profile/${id}`), function (err) {
     if (err) {
       res.json({})
