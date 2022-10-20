@@ -3,6 +3,35 @@ const router = express.Router();
 const bodyParser = require("body-parser");
 const { Group } = require("../models/Group");
 const { ApplyLog } = require("../models/ApplyLog");
+const multer = require('multer')
+const path = require("path");
+
+//업로드 관련 코드 시작
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'uploadedFile/image/group')
+  },
+  filename: (req, file, cb) => {
+    const fileName = `${req.body.group_id}.${file.originalname.split('.').reverse()[0]}`
+    console.log(fileName)
+    cb(null, fileName)
+  },
+})
+
+const upload = multer({ storage: storage })
+
+router.post('/uploadImage', upload.single('file'), function (req, res) {
+  const fileName = `${req.body.group_id}.${req.file.originalname.split('.').reverse()[0]}`
+  Group.updateOne(
+    { _id: req.body.group_id },
+    { imageURL: fileName },
+    function (req, res) {
+    }
+  )
+  res.json({})
+})
+
+//업로드 관련 코드 끝
 
 router.post("/create", (req, res) => {
   console.log(req.body);
@@ -11,7 +40,7 @@ router.post("/create", (req, res) => {
     if (err) return res.json({ success: false, err });
     return res.status(200).json({
       success: true,
-      group:group,
+      group: group,
     });
   });
 });
@@ -132,7 +161,7 @@ router.post("/acceptApplicant", (req, res, next) => {
     } else {
       console.log(success);
       Group.findOne({ _id: req.body.group_id }).then((group) => {
-        res.json({applicants: applyLog, members: group.members})
+        res.json({ applicants: applyLog, members: group.members })
       }).catch((err) => {
         console.log(err);
         next(err)
@@ -143,7 +172,7 @@ router.post("/acceptApplicant", (req, res, next) => {
 
 router.post("/rejectApplicant", (req, res, next) => {
   // console.log(req.body);
-  ApplyLog.updateOne({ _id: req.body._id }, {status:"반려"}).then((tests) => {
+  ApplyLog.updateOne({ _id: req.body._id }, { status: "반려" }).then((tests) => {
     ApplyLog.find({
       $and: [
         { status: "대기" },
