@@ -123,10 +123,8 @@ const storage = multer.diskStorage({
     cb(null, 'uploadedFile/image/profile')
   },
   filename: (req, file, cb) => {
-    console.log(req);
-    // const fileName = `${req.body.user_id}.${file.originalname.split('.').reverse()[0]}`
-    const fileName = `${req.body.user_id}`
-    // console.log(fileName)
+    const fileName = `${req.body.user_id}.${file.originalname.split('.').reverse()[0]}`
+    console.log(fileName)
     cb(null, fileName)
   },
 })
@@ -134,6 +132,13 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage })
 
 router.post('/uploadImage', upload.single('file'), function (req, res) {
+  const fileName = `${req.body.user_id}.${req.file.originalname.split('.').reverse()[0]}`
+  User.updateOne(
+    { user_id: req.body.user_id },
+    { imgURL: fileName },
+    function (req, res) {
+    }
+  )
   res.json({})
 })
 
