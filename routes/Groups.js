@@ -7,10 +7,11 @@ const { ApplyLog } = require("../models/ApplyLog");
 router.post("/create", (req, res) => {
   console.log(req.body);
   const group = new Group(req.body);
-  group.save((err) => {
+  group.save((err, group) => {
     if (err) return res.json({ success: false, err });
     return res.status(200).json({
       success: true,
+      group:group,
     });
   });
 });
