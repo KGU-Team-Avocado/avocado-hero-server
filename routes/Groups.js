@@ -407,7 +407,13 @@ router.post("/modifyClose", (req, res, next) => {
 router.post("/endProject", async (req, res, next) => {
   const members = await Group.updateOne(
     { '_id': req.body._id, },
-    { $set: { "end_project": true } }).exec();
+    {
+      $set: {
+        "close_application":true,
+        "end_project": true,
+        "end_date": new Date()
+      }
+    }).exec();
 
   Group.findOne({ _id: req.body._id }).then((group) => {
     res.json(group)
