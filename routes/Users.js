@@ -117,6 +117,26 @@ router.post("/profileUpdate", (req, res) => {
 
 });
 
+router.post("/updateUserType", (req, res) => {
+  const account = req.body;
+
+  // console.log(req.body);
+
+  User.findOneAndUpdate({ user_id: { $eq: account.user_id } },
+    req.body, null, function (err, docs) {
+      if (err) {
+        console.log(err)
+        res.json({ status: "error", user: user });
+            }
+      else {
+        // console.log("Original Doc : ", docs);/
+        res.json({ status: "success", docs: docs });
+      }
+    });
+
+});
+
+
 //업로드 관련 코드 시작
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
