@@ -423,4 +423,30 @@ router.post("/endProject", async (req, res, next) => {
   });
 });
 
+router.post("/groupFiltering", (req, res, next) => {
+  const regex = (pattern) => new RegExp(`.*${pattern}.*`);
+  const gnRegex = regex(req.body.group_name);
+  const pnRegex = regex(req.body.project_name);
+  const mgrRegex = regex(req.body.manager);
+  let techStackAgg = { tech_stack: { $exists: true } };
+
+  if (req.body.tech_stack.length !== 0) {
+    techStackAgg = { tech_stack: { $in: req.body.tech_stack } }
+  }
+
+  Group.find({
+    $and: [
+      {group_name: {$regex: gnRegex}},
+      {project_name: {$regex: pnRegex}},
+      {manager: {$regex: mgrRegex}},
+      techStackAgg
+    ]
+  }).then((groups) => {
+    return res.json(groups)
+  }).catch((err) => {
+    console.log(err);
+    next(err)
+  });
+});
+
 module.exports = router;
