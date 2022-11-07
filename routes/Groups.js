@@ -62,8 +62,8 @@ router.post("/create", (req, res) => {
 });
 
 router.get("/getGroups", (req, res, next) => {
-  Group.find().then((tests) => {
-    // console.log(tests);
+  Group.find().limit(3).then((tests) => {
+     console.log(tests);
     res.json(tests)
   }).catch((err) => {
     console.log(err);
