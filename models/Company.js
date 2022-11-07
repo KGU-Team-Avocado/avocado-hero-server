@@ -1,36 +1,42 @@
 const mongoose = require("mongoose");
 
 const companySchema = mongoose.Schema({
-    name: {
+  name: {
     type: String,
     maxlength: 30,
   },
-   title: {
+  company_image: {
+    type: String,
+    default: null,
+  },
+  posting_image: {
+    type: String,
+    default: null,
+  },
+  title: {
     type: String,
     maxlength: 30,
   },
-  
-   field: {
-    type: String,
-    maxlength: 30,
-  },
-   recruit_number: {
+  job_tags: [
+    String
+  ],
+  recruit_number: {
     type: String,
     maxlength: 30,
     //unique: 1,
     trim: true, //공백제거
   },
-   tag: {
-    type: String,
-  },
-   period: {
+  skill_tags: [
+    String
+  ],
+  period: {
     type: String,
     maxlength: 30,
   },
-   site: {
+  site: {
     type: String,
   },
-   description: {
+  description: {
     type: String,
   },
   // -- 기본 정보 --
