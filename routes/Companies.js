@@ -118,35 +118,47 @@ const multer = require('multer')
 // });
 
 //업로드 관련 코드 시작
-const storage = multer.diskStorage({
+const companyStorage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'uploadedFile/image/group')
+    cb(null, 'uploadedFile/image/company')
   },
   filename: (req, file, cb) => {
-    const fileName = `${req.body.group_id}.${file.originalname.split('.').reverse()[0]}`
+    const fileName = `${req.body.posting_id}.company.${file.originalname.split('.').reverse()[0]}`
     console.log(fileName)
     cb(null, fileName)
   },
 })
 
-const upload = multer({ storage: storage })
+const postingStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'uploadedFile/image/company')
+  },
+  filename: (req, file, cb) => {
+    const fileName = `${req.body.posting_id}.posting.${file.originalname.split('.').reverse()[0]}`
+    console.log(fileName)
+    cb(null, fileName)
+  },
+})
 
-router.post('/uploadposingImage', upload.single('file'), function (req, res) {
-  const fileName = `${req.body.posting_id}.${req.file.originalname.split('.').reverse()[0]}`
+const companyUpload = multer({ storage: companyStorage })
+const postingUpload = multer({ storage: postingStorage })
+
+router.post('/uploadposingImage', postingUpload.single('file'), function (req, res) {
+  const fileName = `${req.body.posting_id}.posting.${req.file.originalname.split('.').reverse()[0]}`
   Company.updateOne(
     { _id: req.body.posting_id },
-    { imageURL: fileName },
+    { posting_image: fileName },
     function (req, res) {
     }
   )
   res.json({})
 })
 
-router.post('/uploadcompanyImage', upload.single('file'), function (req, res) {
-  const fileName = `${req.body.posting_id}.${req.file.originalname.split('.').reverse()[0]}`
+router.post('/uploadcompanyImage', companyUpload.single('file'), function (req, res) {
+  const fileName = `${req.body.posting_id}.company.${req.file.originalname.split('.').reverse()[0]}`
   Company.updateOne(
     { _id: req.body.posting_id },
-    { imageURL: fileName },
+    { company_image: fileName },
     function (req, res) {
     }
   )
