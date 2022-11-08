@@ -71,6 +71,19 @@ router.get("/getGroups", (req, res, next) => {
   });
 });
 
+
+router.post("/getGroupsInfinity", (req, res, next) => {
+  const skip = req.body.skip;
+  console.log(skip);
+  Group.find({}, undefined, { skip, limit: 3 }).then((tests) => {
+    //  console.log(tests);
+    res.json(tests)
+  }).catch((err) => {
+    console.log(err);
+    next(err)
+  });
+});
+
 router.post("/apply", (req, res) => {
   // console.log(req.body);
   ApplyLog.findOne({
