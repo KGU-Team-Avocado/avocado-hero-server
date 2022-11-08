@@ -449,4 +449,25 @@ router.post("/groupFiltering", (req, res, next) => {
   });
 });
 
+router.post("/modifyReadme", (req, res, next) => {
+  Group.updateOne(
+    { '_id': req.body_project_id, },
+    { $set: {"read_me": req.body.read_me} }).exec((error) => 
+    {
+      if (error) {
+        console.log(error);
+        return res.json({ status: 'error', error })
+      } else {
+        console.log(error);
+        Group.findOne({_id: req.body.project_id }).then((group) => {
+          return res.json(group.read_me)
+
+        }).catch((err) => {
+          console.log(err);
+          next(err)
+        });
+      }
+    });
+})
+
 module.exports = router;
