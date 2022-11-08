@@ -4,6 +4,8 @@ const bodyParser = require("body-parser");
 const { User } = require("../models/User");
 const { Company } = require("../models/Company");
 const { LoginLog } = require("../models/LoginLog");
+const multer = require('multer')
+
 
 // //application/x-www-form-urlencoded
 // app.use(bodyParser.urlencoded({ extended: true }));
@@ -115,6 +117,42 @@ const { LoginLog } = require("../models/LoginLog");
     
 // });
 
+//업로드 관련 코드 시작
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'uploadedFile/image/group')
+  },
+  filename: (req, file, cb) => {
+    const fileName = `${req.body.group_id}.${file.originalname.split('.').reverse()[0]}`
+    console.log(fileName)
+    cb(null, fileName)
+  },
+})
+
+const upload = multer({ storage: storage })
+
+router.post('/uploadposingImage', upload.single('file'), function (req, res) {
+  const fileName = `${req.body.posting_id}.${req.file.originalname.split('.').reverse()[0]}`
+  Company.updateOne(
+    { _id: req.body.posting_id },
+    { imageURL: fileName },
+    function (req, res) {
+    }
+  )
+  res.json({})
+})
+
+router.post('/uploadcompanyImage', upload.single('file'), function (req, res) {
+  const fileName = `${req.body.posting_id}.${req.file.originalname.split('.').reverse()[0]}`
+  Company.updateOne(
+    { _id: req.body.posting_id },
+    { imageURL: fileName },
+    function (req, res) {
+    }
+  )
+  res.json({})
+})
+
 router.post("/jobPost", (req,res) => {
   
   // const companies = {
@@ -136,11 +174,12 @@ router.post("/jobPost", (req,res) => {
     if (result == null) {
       console.log("중복된 제목의 글 없음");
 
-      company.save((err, userInfo) => {
+      company.save((err, company) => {
         if (err) return res.json({ success: false, err });
         console.log("하이");
         return res.status(200).json({
           success: true,
+          company: company
         });
       });
     } else {

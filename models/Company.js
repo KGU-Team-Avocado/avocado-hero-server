@@ -17,9 +17,9 @@ const companySchema = mongoose.Schema({
     type: String,
     maxlength: 30,
   },
-  job_tags: [
-    String
-  ],
+  job_tag: {
+    type: String,
+  },
   recruit_number: {
     type: String,
     maxlength: 30,
