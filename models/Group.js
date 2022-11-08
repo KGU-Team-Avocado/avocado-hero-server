@@ -85,6 +85,12 @@ const groupSchema = mongoose.Schema({
         type:Date,
         default:null,
     },
+
+    // 리드미
+    read_me: {
+        type: String,
+        required: true  // not null
+    },
 })
 
 const Group = mongoose.model('Group', groupSchema)
