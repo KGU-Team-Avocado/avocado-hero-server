@@ -123,7 +123,7 @@ const companyStorage = multer.diskStorage({
     cb(null, 'uploadedFile/image/company')
   },
   filename: (req, file, cb) => {
-    const fileName = `${req.body.posting_id}.company.${file.originalname.split('.').reverse()[0]}`
+    const fileName = `${req.body.posting_id}_company.${file.originalname.split('.').reverse()[0]}`
     console.log(fileName)
     cb(null, fileName)
   },
@@ -134,7 +134,7 @@ const postingStorage = multer.diskStorage({
     cb(null, 'uploadedFile/image/company')
   },
   filename: (req, file, cb) => {
-    const fileName = `${req.body.posting_id}.posting.${file.originalname.split('.').reverse()[0]}`
+    const fileName = `${req.body.posting_id}_posting.${file.originalname.split('.').reverse()[0]}`
     console.log(fileName)
     cb(null, fileName)
   },
