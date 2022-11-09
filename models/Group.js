@@ -89,6 +89,7 @@ const groupSchema = mongoose.Schema({
     // 리드미
     read_me: {
         type: String,
+        default:"리드미를 작성해주세요.",
         required: true  // not null
     },
 })
