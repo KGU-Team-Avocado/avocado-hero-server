@@ -5,7 +5,7 @@ const { User } = require("../models/User");
 const { Company } = require("../models/Company");
 const { LoginLog } = require("../models/LoginLog");
 const multer = require('multer')
-
+const path = require("path");
 
 // //application/x-www-form-urlencoded
 // app.use(bodyParser.urlencoded({ extended: true }));
@@ -144,7 +144,7 @@ const companyUpload = multer({ storage: companyStorage })
 const postingUpload = multer({ storage: postingStorage })
 
 router.post('/uploadposingImage', postingUpload.single('file'), function (req, res) {
-  const fileName = `${req.body.posting_id}.posting.${req.file.originalname.split('.').reverse()[0]}`
+  const fileName = `${req.body.posting_id}_posting.${req.file.originalname.split('.').reverse()[0]}`
   Company.updateOne(
     { _id: req.body.posting_id },
     { posting_image: fileName },
@@ -155,7 +155,7 @@ router.post('/uploadposingImage', postingUpload.single('file'), function (req, r
 })
 
 router.post('/uploadcompanyImage', companyUpload.single('file'), function (req, res) {
-  const fileName = `${req.body.posting_id}.company.${req.file.originalname.split('.').reverse()[0]}`
+  const fileName = `${req.body.posting_id}_company.${req.file.originalname.split('.').reverse()[0]}`
   Company.updateOne(
     { _id: req.body.posting_id },
     { company_image: fileName },
@@ -164,6 +164,19 @@ router.post('/uploadcompanyImage', companyUpload.single('file'), function (req, 
   )
   res.json({})
 })
+
+router.get('/companyImage/:url', function (req, res) {
+  // 특정 아이디값 가져오기
+  const url = req.params.url;
+  // 프론트에서 get을 이용해 파라미터로 id를 넘겨줌 
+  console.log(url)
+  res.sendFile(path.join(__dirname, `../uploadedFile/image/company/${url}`), function (err) {
+    if (err) {
+      res.json({})
+    }
+  });
+});
+
 
 router.post("/jobPost", (req,res) => {
   
