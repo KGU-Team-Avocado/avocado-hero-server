@@ -74,8 +74,9 @@ router.get("/getGroups", (req, res, next) => {
 
 router.post("/getGroupsInfinity", (req, res, next) => {
   const skip = req.body.skip;
-  console.log(skip);
-  Group.find({}, undefined, { skip, limit: 3 }).then((tests) => {
+  const limit = req.body.limit;
+  console.log(req.body);
+  Group.find({}, undefined, { skip, limit: limit }).then((tests) => {
     //  console.log(tests);
     res.json(tests)
   }).catch((err) => {
