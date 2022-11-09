@@ -63,7 +63,7 @@ router.post("/create", (req, res) => {
 
 router.get("/getGroups", (req, res, next) => {
   Group.find().limit(3).then((tests) => {
-     console.log(tests);
+    console.log(tests);
     res.json(tests)
   }).catch((err) => {
     console.log(err);
@@ -76,9 +76,13 @@ router.post("/getGroupsInfinity", (req, res, next) => {
   const skip = req.body.skip;
   const limit = req.body.limit;
   console.log(req.body);
+  let maxCount = 0;
+  Group.count({}, function (err, count) {
+    max = count
+    console.log("Number of groups:", count);
+  })
   Group.find({}, undefined, { skip, limit: limit }).then((tests) => {
-    //  console.log(tests);
-    res.json(tests)
+    res.json({ maxCount: maxCount, groups: tests })
   }).catch((err) => {
     console.log(err);
     next(err)
@@ -423,7 +427,7 @@ router.post("/endProject", async (req, res, next) => {
     { '_id': req.body._id, },
     {
       $set: {
-        "close_application":true,
+        "close_application": true,
         "end_project": true,
         "end_date": new Date()
       }
@@ -450,9 +454,9 @@ router.post("/groupFiltering", (req, res, next) => {
 
   Group.find({
     $and: [
-      {group_name: {$regex: gnRegex}},
-      {project_name: {$regex: pnRegex}},
-      {manager: {$regex: mgrRegex}},
+      { group_name: { $regex: gnRegex } },
+      { project_name: { $regex: pnRegex } },
+      { manager: { $regex: mgrRegex } },
       techStackAgg
     ]
   }).then((groups) => {
@@ -466,14 +470,13 @@ router.post("/groupFiltering", (req, res, next) => {
 router.post("/modifyReadme", (req, res, next) => {
   Group.updateOne(
     { '_id': req.body_project_id, },
-    { $set: {"read_me": req.body.read_me} }).exec((error) => 
-    {
+    { $set: { "read_me": req.body.read_me } }).exec((error) => {
       if (error) {
         console.log(error);
         return res.json({ status: 'error', error })
       } else {
         console.log(error);
-        Group.findOne({_id: req.body.project_id }).then((group) => {
+        Group.findOne({ _id: req.body.project_id }).then((group) => {
           return res.json(group.read_me)
 
         }).catch((err) => {
