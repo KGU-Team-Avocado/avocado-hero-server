@@ -514,4 +514,15 @@ router.post("/createOrganization", (req, res, next) => {
   });
 })
 
+
+router.post("/getOrganizations", (req, res, next) => {
+  Organization.find({ 'user_id': req.body.user_id }).then((tests) => {
+    res.json(tests)
+  }).catch((err) => {
+    console.log(err);
+    next(err)
+  });
+});
+
+
 module.exports = router;
