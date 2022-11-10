@@ -5,6 +5,7 @@ const { Group } = require("../models/Group");
 const { ApplyLog } = require("../models/ApplyLog");
 const multer = require('multer')
 const path = require("path");
+const { Organization } = require("../models/Organization");
 
 //업로드 관련 코드 시작
 const storage = multer.diskStorage({
@@ -485,6 +486,32 @@ router.post("/modifyReadme", (req, res, next) => {
         });
       }
     });
+})
+
+router.post("/createOrganization", (req, res, next) => {
+  const generateRandomString = (num) => {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
+    let result = '';
+    const charactersLength = characters.length;
+    for (let i = 0; i < num; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+
+    return result;
+  }
+  const origin = req.body;
+  const coded = {
+    ...origin,
+    ['code']: generateRandomString(5)
+  }
+  const organization = new Organization(coded);
+  organization.save((err, organization) => {
+    if (err) return res.json({ success: false, err });
+    return res.status(200).json({
+      success: true,
+      organization: organization,
+    });
+  });
 })
 
 module.exports = router;
