@@ -524,5 +524,15 @@ router.post("/getOrganizations", (req, res, next) => {
   });
 });
 
+router.post("/getOrganization", (req, res, next) => {
+  Organization.findOne({ 'code': req.body.code }).then((tests) => {
+    res.json(tests)
+  }).catch((err) => {
+    console.log(err);
+    next(err)
+  });
+});
+
+
 
 module.exports = router;
