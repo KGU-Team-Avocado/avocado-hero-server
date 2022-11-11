@@ -11,6 +11,9 @@ const groupSchema = mongoose.Schema({
         type: String,
         required: true  // not null
     },
+    code: {
+        type: String,
+    },
     short_description: {
         type: String,
         required: true  // not null
