@@ -469,9 +469,12 @@ router.post("/groupFiltering", (req, res, next) => {
 });
 
 router.post("/modifyReadme", (req, res, next) => {
+  console.log("왔을까?"); // 왔어요
+  console.log(req.body);
   Group.updateOne(
-    { '_id': req.body_project_id, },
-    { $set: { "read_me": req.body.read_me } }).exec((error) => {
+    { '_id': req.body.project_id, },
+    { read_me: project_read_me },
+    ).exec((error) => {
       if (error) {
         console.log(error);
         console.log("에러가 나심");
