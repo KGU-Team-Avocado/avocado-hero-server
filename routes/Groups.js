@@ -474,12 +474,13 @@ router.post("/modifyReadme", (req, res, next) => {
     { $set: { "read_me": req.body.read_me } }).exec((error) => {
       if (error) {
         console.log(error);
+        console.log("에러가 나심");
         return res.json({ status: 'error', error })
       } else {
         console.log(error);
         Group.findOne({ _id: req.body.project_id }).then((group) => {
-          return res.json(group.read_me)
-
+          return res.json(group.read_me);
+          console.log("여기까지 오심");
         }).catch((err) => {
           console.log(err);
           next(err)
