@@ -472,22 +472,14 @@ router.post("/modifyReadme", (req, res, next) => {
   console.log("왔을까?"); // 왔어요
   console.log(req.body);
   Group.updateOne(
-    { '_id': req.body.project_id, },
-    { read_me: project_read_me },
+    { '_id': req.body.id, },
+    { read_me: req.body.read_me },
     ).exec((error) => {
       if (error) {
         console.log(error);
-        console.log("에러가 나심");
         return res.json({ status: 'error', error })
       } else {
-        console.log(error);
-        Group.findOne({ _id: req.body.project_id }).then((group) => {
-          return res.json(group.read_me);
-          console.log("여기까지 오심");
-        }).catch((err) => {
-          console.log(err);
-          next(err)
-        });
+        return res.json({ status: 'success' });
       }
     });
 })
