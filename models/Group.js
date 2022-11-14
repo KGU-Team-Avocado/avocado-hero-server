@@ -95,6 +95,25 @@ const groupSchema = mongoose.Schema({
         default:"리드미를 작성해주세요.",
         required: true  // not null
     },
+
+    // 지역
+    local1: {
+        type: String,
+        default: "지역을 설정해주세요.",
+        required: true // not null
+    },
+
+    local2: {
+        type: String,
+        default: "지역을 설정해주세요.",
+        required: true // not null
+    },
+
+    local3: {
+        type: String,
+        default: "지역을 설정해주세요.",
+        required: true // not null
+    }
 })
 
 const Group = mongoose.model('Group', groupSchema)
