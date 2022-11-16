@@ -83,7 +83,9 @@ router.post("/getGroupsInfinity", (req, res, next) => {
     maxCount = count
     console.log("Number of groups:", count);
   })
-  Group.find({code:code}, undefined, { skip, limit: limit }).then((tests) => {
+  Group.find({code:code}, undefined, { skip, limit: limit })
+  .sort({"_id":-1})
+  .then((tests) => {
     res.json({ maxCount: maxCount, groups: tests })
   }).catch((err) => {
     console.log(err);
