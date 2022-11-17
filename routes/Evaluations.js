@@ -13,4 +13,27 @@ router.post("/saveEvaluation", async (req, res, next) => {
     });
 });
 
-  module.exports = router;
+router.post("/getEvalStatistics", async (req, res, next) => {
+    const evalStatistics = await Evaluation.aggregate([
+        { $match: { to: req.body.user_id }},
+        { $unwind: "$score_eval" },
+        {
+            $group: {
+                _id: "$score_eval.label",
+                Value: { $avg: "$score_eval.avg_score" }
+            }
+        },
+        {
+            $group: {
+                _id: 0,
+                score_eval: { $push: { label: "$_id", [req.body.user_id]: "$Value" } }
+            }
+        },
+        {
+            $project: { score_eval: 1, _id: 0 }
+        }
+    ])
+    res.json(evalStatistics);
+})
+
+module.exports = router;
