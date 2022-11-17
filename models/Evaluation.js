@@ -14,6 +14,7 @@ const evaluationSchema = mongoose.Schema({
         required: true
     },
     score_eval: [{
+        label: String,
         questions: [{
             id: String,
             score: Number
