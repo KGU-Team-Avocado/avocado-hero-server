@@ -532,6 +532,23 @@ router.post("/getOrganization", (req, res, next) => {
   });
 });
 
-
+// 스키마 변경 전의 그룹 데이터에 랜덤 그룹 정원 저장을 위한 코드
+router.get("/setAllCapacity", (req, res, next) => {
+  Group.find({}).then((groups) => {
+    groups.map((group) => {
+      Group.updateOne(
+        { _id: group._id },
+        { $set: { "capacity": Math.floor(Math.random() * 10) + 1 } },
+      ).exec((error) => {
+        if (error) {
+          console.log(error);
+          return res.json({ status: 'error', error })
+        } else {
+          return res.json({ status: 'success' });
+        }
+      })
+    })
+  })
+})
 
 module.exports = router;

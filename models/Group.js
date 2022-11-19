@@ -14,6 +14,10 @@ const groupSchema = mongoose.Schema({
     code: {
         type: String,
     },
+    capacity: {
+        type: Number,
+        required: true
+    },
     short_description: {
         type: String,
         required: true  // not null
