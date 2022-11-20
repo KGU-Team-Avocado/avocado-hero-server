@@ -26,16 +26,29 @@ const groupSchema = mongoose.Schema({
         type: String,
         required: true  // not null
     },
-    imageURL:{
-        type:String,
-        default:null,
+    imageURL: {
+        type: String,
+        default: null,
     },
-    tech_stack: [
-        String
-    ],
-    manager:{
-        type:String,
-        required:true
+    project_stack: {
+        type: [String],
+        default: [],
+    },
+    tech_stack: {
+        type: [String],
+        default: [],
+    },
+    personal_stack: {
+        type: [String],
+        default: [],
+    },
+    role_stack: {
+        type: [String],
+        default: [],
+    },
+    manager: {
+        type: String,
+        required: true
     },
     notices: [
         {
@@ -54,7 +67,7 @@ const groupSchema = mongoose.Schema({
                 startTime: String,
                 endRecur: Date,
                 endTime: String,
-                daysOfWeek: [ String ]
+                daysOfWeek: [String]
             }
         ],
         nonrecursive: [
@@ -84,19 +97,19 @@ const groupSchema = mongoose.Schema({
         type: Boolean,
         required: true
     },
-    start_date:{
-        type:Date,
-        default:new Date(),
+    start_date: {
+        type: Date,
+        default: new Date(),
     },
-    end_date:{
-        type:Date,
-        default:null,
+    end_date: {
+        type: Date,
+        default: null,
     },
 
     // 리드미
     read_me: {
         type: String,
-        default:"리드미를 작성해주세요.",
+        default: "리드미를 작성해주세요.",
         required: true  // not null
     },
 
