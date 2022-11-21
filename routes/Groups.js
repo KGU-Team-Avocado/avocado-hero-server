@@ -72,6 +72,15 @@ router.get("/getGroups", (req, res, next) => {
   });
 });
 
+router.post("/getGroupByCode", (req, res, next) => {
+  Group.find(req.body).then((tests) => {
+    console.log(tests);
+    res.json(tests)
+  }).catch((err) => {
+    console.log(err);
+    next(err)
+  });
+});
 
 router.post("/getGroupsInfinity", (req, res, next) => {
   const code = req.body.code;
