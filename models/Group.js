@@ -31,8 +31,8 @@ const groupSchema = mongoose.Schema({
         default: null,
     },
     project_stack: {
-        type: [String],
-        default: [],
+        type: String,
+        default: 'null',
     },
     tech_stack: {
         type: [String],
