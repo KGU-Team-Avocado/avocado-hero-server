@@ -179,11 +179,11 @@ router.post("/getApplicants", (req, res, next) => {
   });
 });
 
-router.post("/acceptApplicant", (req, res, next) => {
+router.post("/acceptApplicant", async (req, res, next) => {
   // console.log(req.body);
   let applyLog = {};
 
-  ApplyLog.deleteOne({ _id: req.body._id }).then((tests) => {
+  const apply = await ApplyLog.deleteOne({ _id: req.body._id }).then((tests) => {
     ApplyLog.find({
       $and: [
         { status: "대기" },
