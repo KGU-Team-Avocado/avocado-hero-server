@@ -458,19 +458,29 @@ router.post("/groupFiltering", (req, res, next) => {
   const regex = (pattern) => new RegExp(`.*${pattern}.*`);
   const gnRegex = regex(req.body.group_name);
   const pnRegex = regex(req.body.project_name);
-  const mgrRegex = regex(req.body.manager);
+  // const mgrRegex = regex(req.body.manager);
+  let projectStackAgg = { project_stack: { $exists: true } };
   let techStackAgg = { tech_stack: { $exists: true } };
+  let roleStackAgg = { role_stack: { $exists: true } };
 
+  if (req.body.project_stack.length !== 0) {
+    projectStackAgg = { project_stack: { $in: req.body.project_stack } }
+  }
   if (req.body.tech_stack.length !== 0) {
     techStackAgg = { tech_stack: { $in: req.body.tech_stack } }
+  }
+  if (req.body.role_stack.length !== 0) {
+    roleStackAgg = { role_stack: { $in: req.body.role_stack } }
   }
 
   Group.find({
     $and: [
       { group_name: { $regex: gnRegex } },
       { project_name: { $regex: pnRegex } },
-      { manager: { $regex: mgrRegex } },
-      techStackAgg
+      // { manager: { $regex: mgrRegex } },
+      projectStackAgg,
+      techStackAgg,
+      roleStackAgg   
     ]
   }).then((groups) => {
     return res.json(groups)
