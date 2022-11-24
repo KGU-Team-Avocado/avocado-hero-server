@@ -53,11 +53,11 @@ router.post("/login", (req, res) => {
         if (user === null) {
           return res.json({ status: "fail", user: user });
         } else {
-          LoginLog.find().then((tests) => {
-            new LoginLog({ secure_num: tests.length, user_id: user.user_id, time: new Date() }).save();
-          }).catch((err) => {
-            console.log(err);
-          });
+          // LoginLog.find().then((tests) => {
+          //   new LoginLog({ secure_num: tests.length, user_id: user.user_id, time: new Date() }).save();
+          // }).catch((err) => {
+          //   console.log(err);
+          // });
           delete user._doc.user_password
           return res.json({ status: "success", user });
         }
